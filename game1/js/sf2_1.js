@@ -304,21 +304,24 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         }
 
         if (victoriaPersonaje) {
-            //Nombre
-            ctx.drawImage(spriteDecoraciones, 16, 71,
-                63, 10, 150, 80, 63, 10);
-            //W
-            ctx.drawImage(spriteDecoraciones, 101, 125,
-                11, 10, 215, 80, 11, 10);
-            //I
-            ctx.drawImage(spriteDecoraciones, 127, 113,
-                5, 10, 226, 80, 5, 10);
-            //N
-            ctx.drawImage(spriteDecoraciones, 185, 113,
-                11, 10, 232, 80, 11, 10);
-            //S
-            ctx.drawImage(spriteDecoraciones, 53, 125,
-                10, 10, 243, 80, 10, 10);
+            if (!this.muertePj) {
+                //Nombre
+                ctx.drawImage(spriteDecoraciones, 16, 71,
+                    63, 10, 150, 80, 63, 10);
+                //W
+                ctx.drawImage(spriteDecoraciones, 101, 125,
+                    11, 10, 215, 80, 11, 10);
+                //I
+                ctx.drawImage(spriteDecoraciones, 127, 113,
+                    5, 10, 226, 80, 5, 10);
+                //N
+                ctx.drawImage(spriteDecoraciones, 185, 113,
+                    11, 10, 232, 80, 11, 10);
+                //S
+                ctx.drawImage(spriteDecoraciones, 53, 125,
+                    10, 10, 243, 80, 10, 10);
+            }
+
         }
         //Nombre
         ctx.drawImage(spriteDecoraciones, 16, 71,
@@ -426,7 +429,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.muerteP2 = function (nombreAnimacion) {
+    this.muerteP2 = function () {
         if (actualFrame != bisonMuerte.length - 1) {
             actualFrame = (actualFrame + 1) % bisonMuerte.length;
             let frame = bisonMuerte[actualFrame];
@@ -506,21 +509,23 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
 
         }
         if (victoriaPersonaje) {
-            //Nombre
-            ctx.drawImage(spriteDecoraciones, 290, 71,
-                61, 10, 150, 80, 61, 10);
-            //W
-            ctx.drawImage(spriteDecoraciones, 101, 125,
-                11, 10, 200, 80, 11, 10);
-            //I
-            ctx.drawImage(spriteDecoraciones, 127, 113,
-                5, 10, 212, 80, 5, 10);
-            //N
-            ctx.drawImage(spriteDecoraciones, 185, 113,
-                11, 10, 218, 80, 11, 10);
-            //S
-            ctx.drawImage(spriteDecoraciones, 53, 125,
-                10, 10, 230, 80, 10, 10);
+            if (!this.muertePj) {
+                //Nombre
+                ctx.drawImage(spriteDecoraciones, 290, 71,
+                    61, 10, 150, 80, 61, 10);
+                //W
+                ctx.drawImage(spriteDecoraciones, 101, 125,
+                    11, 10, 200, 80, 11, 10);
+                //I
+                ctx.drawImage(spriteDecoraciones, 127, 113,
+                    5, 10, 212, 80, 5, 10);
+                //N
+                ctx.drawImage(spriteDecoraciones, 185, 113,
+                    11, 10, 218, 80, 11, 10);
+                //S
+                ctx.drawImage(spriteDecoraciones, 53, 125,
+                    10, 10, 230, 80, 10, 10);
+            }
         }
         //nombre
         ctx.drawImage(spriteDecoraciones, 290, 71,
