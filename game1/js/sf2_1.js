@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', inicio);
 
 
 function mostrarContador() {
+    console.log('hola')
 
     contadorFrames++;
 
