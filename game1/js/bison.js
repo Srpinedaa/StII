@@ -84,3 +84,22 @@ let bisonMuerte = [
     { x: 1671, y: 562, width: 153, height: 32 },
 
 ]
+
+let bisonPunyo = [
+    { x: 23, y: 1589, width: 103, height: 110 },
+    { x: 146, y: 1591, width: 130, height: 109 }
+]
+
+let bisonPatada = [
+    { x: 31, y: 2936, width: 93, height: 114 },
+    { x: 146, y: 2940, width: 90, height: 110 },
+    { x: 254, y: 2942, width: 121, height: 109 },
+
+]
+let bisonGolpeEspecial = [
+    { x: 27, y: 4355, width: 97, height: 115 },
+    { x: 159, y: 4357, width: 63, height: 114 },
+    { x: 245, y: 4359, width: 126, height: 112 },
+    { x: 403, y: 4357, width: 60, height: 114 },
+    { x: 494, y: 4357, width: 143, height: 114 },
+]
