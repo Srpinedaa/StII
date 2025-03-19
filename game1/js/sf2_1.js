@@ -722,7 +722,7 @@ document.addEventListener('keydown', (e) => {
         case "b":
             Bison.quitarVida(10);
             break;
-<<<<<<< HEAD
+
         case "e":
             console.log('golpe de zangif');
             Zangif.golpe(); //funciona  
@@ -734,13 +734,13 @@ document.addEventListener('keydown', (e) => {
         case "o":
             console.log('zangief golpe especial');
             Zangif.golpeEspecial();
-=======
+
         case "l":
             cambioEscenario = true;
             break;
         case "k":
             cambioEscenario = false;
->>>>>>> origin/develop
+
             break;
         default:
             break;
