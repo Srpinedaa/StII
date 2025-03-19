@@ -65,25 +65,27 @@ let zangifMuerte = [
 ]
 
 let zangifPunyo = [
-    { x: 343, y: 308, width: 103, height: 90 },
-    { x: 460, y: 303, width: 130, height: 95 },
-    { x: 601, y: 308, width: 103, height: 90 }
+    { x: 22, y: 1589, width: 105, height: 109 },
+    { x: 22, y: 1589, width: 105, height: 109 },
+
+    { x: 145, y: 1591, width: 131, height: 107 },
+    { x: 145, y: 1591, width: 131, height: 107 }
+
 ]
 let zangifPatada = [
-    { x: 248, y: 299, width: 83, height: 99 },
-    { x: 100, y: 298, width: 139, height: 100 },
-    { x: 1, y: 300, width: 94, height: 97 }
+    { x: 27, y: 3536, width: 95, height: 116 },
+    { x: 150, y: 3542, width: 106, height: 110 },
+    { x: 279, y: 3543, width: 131, height: 109 }
 
 ]
 let zangifGolpeEspecial = [
-    { x: 1258, y: 784, width: 87, height: 82 },
-    { x: 1103, y: 788, width: 151, height: 67 },
-    { x: 926, y: 780, width: 169, height: 48 },
-    { x: 733, y: 778, width: 174, height: 48 },
-    { x: 555, y: 779, width: 170, height: 48 },
-    { x: 377, y: 781, width: 172, height: 44 },
-    { x: 219, y: 772, width: 149, height: 68 },
-    { x: 114, y: 767, width: 88, height: 84 },
-    { x: 4, y: 761, width: 97, height: 90 }
+    { x: 37, y: 5461, width: 99, height: 114 },
+    { x: 163, y: 5460, width: 115, height: 115 },
+    { x: 295, y: 5461, width: 100, height: 113 },
+    { x: 408, y: 5460, width: 93, height: 115 },
+    { x: 526, y: 5465, width: 118, height: 110 },
+    { x: 40, y: 5585, width: 122, height: 110 },
+    { x: 191, y: 5581, width: 79, height: 116 },
+    { x: 298, y: 5580, width: 94, height: 114 }
 
 ]

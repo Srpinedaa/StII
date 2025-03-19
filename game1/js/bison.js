@@ -85,21 +85,40 @@ let bisonMuerte = [
 
 ]
 
+//bison golpes
 let bisonPunyo = [
-    { x: 23, y: 1589, width: 103, height: 110 },
-    { x: 146, y: 1591, width: 130, height: 109 }
+    { x: 340, y: 308, width: 107, height: 90 },
+    { x: 461, y: 302, width: 130, height: 96 },
+    { x: 600, y: 306, width: 106, height: 93 },
+
+
 ]
 
+//bison patadas
 let bisonPatada = [
-    { x: 31, y: 2936, width: 93, height: 114 },
-    { x: 146, y: 2940, width: 90, height: 110 },
-    { x: 254, y: 2942, width: 121, height: 109 },
+    { x: 248, y: 298, width: 84, height: 100 },
+    { x: 248, y: 298, width: 84, height: 100 },
+
+    { x: 99, y: 297, width: 140, height: 101 },
+    { x: 99, y: 297, width: 140, height: 101 },
+
+    { x: 1, y: 299, width: 95, height: 99 },
+    { x: 1, y: 299, width: 95, height: 99 }
+
+
+
 
 ]
+
+//bison golpe especial
 let bisonGolpeEspecial = [
-    { x: 27, y: 4355, width: 97, height: 115 },
-    { x: 159, y: 4357, width: 63, height: 114 },
-    { x: 245, y: 4359, width: 126, height: 112 },
-    { x: 403, y: 4357, width: 60, height: 114 },
-    { x: 494, y: 4357, width: 143, height: 114 },
+    { x: 1257, y: 783, width: 88, height: 84 },
+    { x: 1103, y: 788, width: 151, height: 68 },
+    { x: 925, y: 780, width: 170, height: 49 },
+    { x: 733, y: 778, width: 173, height: 49 },
+    { x: 555, y: 779, width: 169, height: 49 },
+    { x: 377, y: 781, width: 172, height: 44 },
+    { x: 218, y: 771, width: 151, height: 69 },
+    { x: 115, y: 768, width: 88, height: 83 },
+    { x: 4, y: 760, width: 97, height: 91 }
 ]
