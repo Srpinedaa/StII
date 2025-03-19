@@ -122,3 +122,11 @@ let bisonGolpeEspecial = [
     { x: 115, y: 768, width: 88, height: 83 },
     { x: 4, y: 760, width: 97, height: 91 }
 ]
+
+//Bison caminando
+let bisontCaminando = [
+    { x: 601, y: 33, width: 105, height: 94 },
+    { x: 508, y: 26, width: 80, height: 102 },
+    { x: 424, y: 29, width: 69, height: 97 },
+    { x: 346, y: 25, width: 66, height: 102 },
+]
