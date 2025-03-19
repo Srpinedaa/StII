@@ -539,7 +539,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         this.dibujarObjetos();
     }
 }
-
+let cambioEscenario = false;
 let Bison = new player2(230, 100, 108, 96, 'img/Bison.png', 'img/decoraciones.png');
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
@@ -580,10 +580,11 @@ document.addEventListener('keydown', (e) => {
         case "b":
             Bison.quitarVida(10);
             break;
-        case "e":
+        case "l":
+            cambioEscenario = true;
             break;
-        case "p":
-
+        case "k":
+            cambioEscenario = false;
             break;
         default:
             break;
@@ -619,11 +620,10 @@ let Stage = function (x, y, width, height, img, imgDecoraciones) {
 
     let actualFrame = 0;
 
-    this.animacion = function () {
-
+    this.animacion = function (nombreAnimacion) {
         if (this.frameContador >= this.frameDelay) {
-            actualFrame = (actualFrame + 1) % bisonEscena.length;
-            let frame = bisonEscena[actualFrame];
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -663,7 +663,7 @@ let Stage = function (x, y, width, height, img, imgDecoraciones) {
 }
 
 
-// let escena_bison = new stage(0, 0, 621, 224, 'img/bison_Background_sprite.png');
+let escena_ken = new Stage(0, 0, 621, 224, 'img/Ken_Background_sprite.png', 'img/decoraciones.png');
 let escena_bison = new Stage(0, 0, 474, 224, 'img/zangif_sprite_background.png', 'img/decoraciones.png');
 
 function inicio() {
@@ -677,8 +677,15 @@ function inicio() {
 function principal() {
     borrarCanvas();
     mostrarContador('img/decoraciones.png');
-    escena_bison.dibuja();
-    escena_bison.animacion();
+
+    if (!cambioEscenario) {
+        escena_bison.dibuja();
+        escena_bison.animacion(bisonEscena);
+    } else {
+        escena_ken.dibuja();
+        escena_ken.animacion(escenari);
+    }
+
     Bison.dibuja();
     Bison.dibujarObjetos();
     let animacion1p = "";
