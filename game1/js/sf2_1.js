@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', inicio);
 
 
 function mostrarContador() {
-    console.log('hola')
-
     contadorFrames++;
 
     canvas = document.getElementById('canvas');
@@ -241,6 +239,71 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         this.dibuja();
         this.dibujarObjetos();
     }
+
+    //zangif golpe punyo
+    this.golpe = function () {
+        if (this.frameContador >= 2) {
+            actualFrame = (actualFrame + 1) % zangifPunyo.length;
+            let frame = zangifPunyo[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+
+    this.patada = function () {
+        if (this.frameContador >= 4) {
+            actualFrame = (actualFrame + 1) % zangifPatada.length;
+            let frame = zangifPatada[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+
+    this.golpeEspecial = function () {
+        if (this.frameContador >= 3) {
+            actualFrame = (actualFrame + 1) % zangifGolpeEspecial.length;
+            let frame = zangifGolpeEspecial[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+
     this.izquierda = function () {
         this.x -= this.velocidadX;
 
@@ -305,21 +368,24 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         }
 
         if (victoriaPersonaje) {
-            //Nombre
-            ctx.drawImage(spriteDecoraciones, 16, 71,
-                63, 10, 150, 80, 63, 10);
-            //W
-            ctx.drawImage(spriteDecoraciones, 101, 125,
-                11, 10, 215, 80, 11, 10);
-            //I
-            ctx.drawImage(spriteDecoraciones, 127, 113,
-                5, 10, 226, 80, 5, 10);
-            //N
-            ctx.drawImage(spriteDecoraciones, 185, 113,
-                11, 10, 232, 80, 11, 10);
-            //S
-            ctx.drawImage(spriteDecoraciones, 53, 125,
-                10, 10, 243, 80, 10, 10);
+            if (!this.muertePj) {
+                //Nombre
+                ctx.drawImage(spriteDecoraciones, 16, 71,
+                    63, 10, 150, 80, 63, 10);
+                //W
+                ctx.drawImage(spriteDecoraciones, 101, 125,
+                    11, 10, 215, 80, 11, 10);
+                //I
+                ctx.drawImage(spriteDecoraciones, 127, 113,
+                    5, 10, 226, 80, 5, 10);
+                //N
+                ctx.drawImage(spriteDecoraciones, 185, 113,
+                    11, 10, 232, 80, 11, 10);
+                //S
+                ctx.drawImage(spriteDecoraciones, 53, 125,
+                    10, 10, 243, 80, 10, 10);
+            }
+
         }
         //Nombre
         ctx.drawImage(spriteDecoraciones, 16, 71,
@@ -427,7 +493,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.muerteP2 = function (nombreAnimacion) {
+    this.muerteP2 = function () {
         if (actualFrame != bisonMuerte.length - 1) {
             actualFrame = (actualFrame + 1) % bisonMuerte.length;
             let frame = bisonMuerte[actualFrame];
@@ -446,6 +512,72 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         this.dibujarObjetos();
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
+
+    //bison golpe punyo
+    this.golpe = function () {
+        if (this.frameContador >= 3) {
+            actualFrame = (actualFrame + 1) % bisonPunyo.length;
+            let frame = bisonPunyo[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+
+    this.patada = function () {
+        if (this.frameContador >= 2) {
+            actualFrame = (actualFrame + 1) % bisonPatada.length;
+            let frame = bisonPatada[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+
+    //bison golpe especial
+    this.golpeEspecial = function () {
+        if (this.frameContador >= 3) {
+            actualFrame = (actualFrame + 1) % bisonGolpeEspecial.length;
+            let frame = bisonGolpeEspecial[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+
     this.izquierda = function () {
         this.x -= this.velocidadX;
 
@@ -507,21 +639,23 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
 
         }
         if (victoriaPersonaje) {
-            //Nombre
-            ctx.drawImage(spriteDecoraciones, 290, 71,
-                61, 10, 150, 80, 61, 10);
-            //W
-            ctx.drawImage(spriteDecoraciones, 101, 125,
-                11, 10, 200, 80, 11, 10);
-            //I
-            ctx.drawImage(spriteDecoraciones, 127, 113,
-                5, 10, 212, 80, 5, 10);
-            //N
-            ctx.drawImage(spriteDecoraciones, 185, 113,
-                11, 10, 218, 80, 11, 10);
-            //S
-            ctx.drawImage(spriteDecoraciones, 53, 125,
-                10, 10, 230, 80, 10, 10);
+            if (!this.muertePj) {
+                //Nombre
+                ctx.drawImage(spriteDecoraciones, 290, 71,
+                    61, 10, 150, 80, 61, 10);
+                //W
+                ctx.drawImage(spriteDecoraciones, 101, 125,
+                    11, 10, 200, 80, 11, 10);
+                //I
+                ctx.drawImage(spriteDecoraciones, 127, 113,
+                    5, 10, 212, 80, 5, 10);
+                //N
+                ctx.drawImage(spriteDecoraciones, 185, 113,
+                    11, 10, 218, 80, 11, 10);
+                //S
+                ctx.drawImage(spriteDecoraciones, 53, 125,
+                    10, 10, 230, 80, 10, 10);
+            }
         }
         //nombre
         ctx.drawImage(spriteDecoraciones, 290, 71,
@@ -536,11 +670,11 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         this.dibujarObjetos();
     }
 }
-
+let cambioEscenario = false;
 let Bison = new player2(230, 100, 108, 96, 'img/Bison.png', 'img/decoraciones.png');
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
-        //Jugador 2
+        //Jugador Bison
         case "ArrowUp":
             Bison.saltar();
             break;
@@ -555,7 +689,18 @@ document.addEventListener('keydown', (e) => {
         case "ArrowRight":
             Bison.derecha();
             break;
-        //Jugador 1
+        case "m":
+            Bison.golpe();
+            break;
+        case "n":
+            Bison.patada();
+            break;
+        case "t":
+            Bison.golpeEspecial();
+            break;
+
+
+        //Jugador Zangif
         case "w":
             Zangif.saltar();
             break;
@@ -577,9 +722,25 @@ document.addEventListener('keydown', (e) => {
         case "b":
             Bison.quitarVida(10);
             break;
+
         case "e":
+            console.log('golpe de zangif');
+            Zangif.golpe(); //funciona  
             break;
-        case "p":
+        case "q":
+            console.log('patada de zangif');
+            Zangif.patada();
+            break;
+        case "o":
+            console.log('zangief golpe especial');
+            Zangif.golpeEspecial();
+            break;
+
+        case "l":
+            cambioEscenario = true;
+            break;
+        case "k":
+            cambioEscenario = false;
 
             break;
         default:
@@ -616,11 +777,10 @@ let Stage = function (x, y, width, height, img, imgDecoraciones) {
 
     let actualFrame = 0;
 
-    this.animacion = function () {
-
+    this.animacion = function (nombreAnimacion) {
         if (this.frameContador >= this.frameDelay) {
-            actualFrame = (actualFrame + 1) % bisonEscena.length;
-            let frame = bisonEscena[actualFrame];
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -660,7 +820,7 @@ let Stage = function (x, y, width, height, img, imgDecoraciones) {
 }
 
 
-// let escena_bison = new stage(0, 0, 621, 224, 'img/bison_Background_sprite.png');
+let escena_ken = new Stage(0, 0, 621, 224, 'img/Ken_Background_sprite.png', 'img/decoraciones.png');
 let escena_bison = new Stage(0, 0, 474, 224, 'img/zangif_sprite_background.png', 'img/decoraciones.png');
 
 function inicio() {
@@ -674,14 +834,23 @@ function inicio() {
 function principal() {
     borrarCanvas();
     mostrarContador('img/decoraciones.png');
-    escena_bison.dibuja();
-    escena_bison.animacion();
+
+    if (!cambioEscenario) {
+        escena_bison.dibuja();
+        escena_bison.animacion(bisonEscena);
+    } else {
+        escena_ken.dibuja();
+        escena_ken.animacion(escenari);
+    }
+
     Bison.dibuja();
     Bison.dibujarObjetos();
     let animacion1p = "";
     if (esPrimeraMuerte1p) {
         animacion1p = bisonVictory;
         Bison.x = 280;
+        //Bison.golpe();
+
     } else {
         animacion1p = bisonReady;
         if (!Bison.muertePj) {
@@ -702,14 +871,18 @@ function principal() {
     Zangif.dibuja();
     Zangif.dibujarObjetos();
 
+
+
     let animacion2p = "";
+
     if (esPrimeraMuerte2p) {
+
         animacion2p = ZangiefVictory;
         paraContador = true;
-
     } else {
         if (!Zangif.muertePj) {
             Zangif.animacion(ZangifReady);
+
         }
     }
     if (esSegundaMuerte2p) {
@@ -727,7 +900,6 @@ function principal() {
 
     muerte();
 
-    // Zangif.descender();
     interval = requestAnimationFrame(principal);
 }
 

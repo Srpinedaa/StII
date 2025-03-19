@@ -63,3 +63,29 @@ let zangifMuerte = [
     { x: 636, y: 7000, width: 144, height: 42 },
 
 ]
+
+let zangifPunyo = [
+    { x: 22, y: 1589, width: 105, height: 109 },
+    { x: 22, y: 1589, width: 105, height: 109 },
+
+    { x: 145, y: 1591, width: 131, height: 107 },
+    { x: 145, y: 1591, width: 131, height: 107 }
+
+]
+let zangifPatada = [
+    { x: 27, y: 3536, width: 95, height: 116 },
+    { x: 150, y: 3542, width: 106, height: 110 },
+    { x: 279, y: 3543, width: 131, height: 109 }
+
+]
+let zangifGolpeEspecial = [
+    { x: 37, y: 5461, width: 99, height: 114 },
+    { x: 163, y: 5460, width: 115, height: 115 },
+    { x: 295, y: 5461, width: 100, height: 113 },
+    { x: 408, y: 5460, width: 93, height: 115 },
+    { x: 526, y: 5465, width: 118, height: 110 },
+    { x: 40, y: 5585, width: 122, height: 110 },
+    { x: 191, y: 5581, width: 79, height: 116 },
+    { x: 298, y: 5580, width: 94, height: 114 }
+
+]
