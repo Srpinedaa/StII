@@ -786,7 +786,6 @@ document.addEventListener('keydown', (e) => {
             console.log('zangief golpe especial');
             Zangif.golpeEspecial();
             break;
-
         case "l":
             cambioEscenario = true;
             break;

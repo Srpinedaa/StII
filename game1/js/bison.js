@@ -132,5 +132,4 @@ let bisonCaminando = [
     { x: 424, y: 29, width: 69, height: 97 },
     { x: 424, y: 29, width: 69, height: 97 },
     { x: 346, y: 25, width: 66, height: 102 },
-    { x: 346, y: 25, width: 66, height: 102 },
 ]
