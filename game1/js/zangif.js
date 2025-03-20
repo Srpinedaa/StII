@@ -89,3 +89,13 @@ let zangifGolpeEspecial = [
     { x: 298, y: 5580, width: 94, height: 114 }
 
 ]
+
+
+let zangifCaminando = [
+    { x: 15, y: 570, width: 99, height: 110 },
+    { x: 146, y: 568, width: 93, height: 108 },
+    { x: 260, y: 567, width: 91, height: 107 },
+    { x: 371, y: 571, width: 99, height: 108 },
+    { x: 496, y: 569, width: 90, height: 110 },
+    { x: 610, y: 568, width: 88, height: 112 },
+]

@@ -304,9 +304,34 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
+    this.caminar = function (esIzquierda) {
+        if (this.frameContador >= 4) {
+            actualFrame = (actualFrame + 1) % zangifCaminando.length;
+            let frame = zangifCaminando[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+
+        if (esIzquierda == 0) {
+            this.x -= this.velocidadX;
+        } else {
+            this.x += this.velocidadX;
+        }
+    }
+
     this.izquierda = function () {
         this.x -= this.velocidadX;
-
     }
 
     this.derecha = function () {
@@ -578,9 +603,35 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
+
+    this.caminar = function (esIzquierda) {
+        if (this.frameContador >= 3) {
+            actualFrame = (actualFrame + 1) % bisonCaminando.length;
+            let frame = bisonCaminando[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+
+        if (esIzquierda == 0) {
+            this.x -= this.velocidadX;
+        } else {
+            this.x += this.velocidadX;
+        }
+    }
+
     this.izquierda = function () {
         this.x -= this.velocidadX;
-
     }
 
     this.derecha = function () {
@@ -684,10 +735,10 @@ document.addEventListener('keydown', (e) => {
             }
             break;
         case "ArrowLeft":
-            Bison.izquierda();
+            Bison.caminar(0);
             break;
         case "ArrowRight":
-            Bison.derecha();
+            Bison.caminar(1);
             break;
         case "m":
             Bison.golpe();
@@ -700,6 +751,7 @@ document.addEventListener('keydown', (e) => {
             break;
 
 
+
         //Jugador Zangif
         case "w":
             Zangif.saltar();
@@ -710,11 +762,10 @@ document.addEventListener('keydown', (e) => {
             }
             break;
         case "a":
-            Zangif.izquierda();
-
+            Zangif.caminar(0);
             break;
         case "d":
-            Zangif.derecha();
+            Zangif.caminar(1);
             break;
         case "z":
             Zangif.quitarVida(10);
