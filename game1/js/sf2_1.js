@@ -305,34 +305,12 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     this.izquierda = function () {
-        this.x -= this.velocidadX;
-
-    }
+        this.x -= this.velocidadX * 0.5; // Ajusta el factor de velocidad
+    };
 
     this.derecha = function () {
-        this.x += this.velocidadX;
-    }
-    this.saltar = function () {
-        if (this.y >= 180) {
-            this.y -= this.gravedad * 40;
-        }
-    }
-    this.descender = function () {
-        if (this.y < (canvas.height - this.height)) {
-            this.y += this.gravedad;
-        }
-    }
-
-    this.agacharse = function () {
-        this.height = this.height / 2;
-        this.y = this.y + this.height;
-        this.dibuja();
-    }
-
-    this.levantarse = function () {
-        this.animacion();
-        this.dibuja();
-    }
+        this.x += this.velocidadX * 0.5; // Ajusta el factor de velocidad
+    };
 
     let spriteDecoraciones = new Image();
     spriteDecoraciones.src = this.imgDecoraciones;
@@ -579,34 +557,13 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     this.izquierda = function () {
-        this.x -= this.velocidadX;
-
-    }
+        this.x -= this.velocidadX * 0.5; // Ajusta el factor de velocidad
+    };
 
     this.derecha = function () {
-        this.x += this.velocidadX;
-    }
-    this.saltar = function () {
-        if (this.y >= 180) {
-            this.y -= this.gravedad * 40;
-        }
-    }
-    this.descender = function () {
-        if (this.y < (canvas.height - this.height)) {
-            this.y += this.gravedad;
-        }
-    }
+        this.x += this.velocidadX * 0.5; // Ajusta el factor de velocidad
+    };
 
-    this.agacharse = function () {
-        this.height = this.height / 2;
-        this.y = this.y + this.height;
-        this.dibuja();
-        this.dibujarObjetos();
-    }
-
-    this.levantarse = function () {
-        this.animacion();
-    }
     let spriteDecoraciones = new Image();
     spriteDecoraciones.src = this.imgDecoraciones;
     let victoriaPersonaje = false;
@@ -662,6 +619,13 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
             61, 10, 305, 35, 61, 10);
 
     }
+    this.movimiento = function () {
+        let posicionB = Bison.x + Bison.width;
+        // if (posicionB > 402) {
+        //     Bison.x = 402;
+        // }
+        // console.log(posicionB);
+    }
 
     this.quitarVida = function (mal) {
         if (this.tamanybarra <= 145 && this.tamanybarra > 0) {
@@ -672,22 +636,134 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
 }
 let cambioEscenario = false;
 let Bison = new player2(230, 100, 108, 96, 'img/Bison.png', 'img/decoraciones.png');
+
+
+let Stage = function (x, y, width, height, img, imgDecoraciones) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.img = img;
+    this.imgDecoraciones = imgDecoraciones;
+    this.frameDelay = 5;
+    this.frameContador = 0;
+    this.posicionFondo = 0;
+
+    // 1028
+    // this.sprite_x = 0;
+    // this.sprite_y = 0;
+    // this.sprite_w = 0;
+    // this.sprite_h = 0;
+
+    this.dibuja = function () {
+        let sprite = new Image();
+        sprite.src = this.img;
+        // console.log(this.sprite_x);
+        ctx.drawImage(sprite, this.sprite_x, this.sprite_y,
+            this.sprite_w, this.sprite_h, this.x, this.y, this.width, this.height);
+    }
+
+
+    let actualFrame = 0;
+
+    this.animacion = function (nombreAnimacion) {
+        if (this.frameContador >= this.frameDelay) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        mostrarContador();
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+    let diferencia = 0;
+    let posicionB = 0;
+    this.animacionCaminar = function (nombreAnimacion) {
+        diferencia = this.sprite_w - canvas.width;
+        posicionB = Bison.x + Bison.width;
+
+        if (this.frameContador >= this.frameDelay) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+
+        if (movimientoDerecha && (Bison.x + Bison.width) <= 402) {
+            this.posicionFondo += 2;
+            if (this.posicionFondo > diferencia) {
+                this.posicionFondo = diferencia;
+            }
+        }
+
+        this.sprite_x = this.posicionFondo;
+        this.dibuja();
+        this.dibujarObjetos();
+        mostrarContador();
+    }
+    let spriteDecoraciones = new Image();
+    spriteDecoraciones.src = this.imgDecoraciones;
+    this.dibujarObjetos = function () {
+        if (Zangif.tamanybarra >= 145 && Bison.tamanybarra <= 0) {
+            //Ko
+            ctx.drawImage(spriteDecoraciones, 161, 1,
+                32, 14, 173, 18, 32, 14);
+        } else {
+            //Ko
+            ctx.drawImage(spriteDecoraciones, 161, 16,
+                32, 14, 173, 18, 32, 14);
+        }
+
+        if (segundo_10s <= 0 && segundo_1s <= 0) {
+            //TIME OVER
+            ctx.drawImage(spriteDecoraciones, 352, 112,
+                64, 30, 160, 80, 64, 30);
+
+        }
+
+    }
+
+}
+
+
+let escena_ken = new Stage(0, 0, 621, 224, 'img/Ken_Background_sprite.png', 'img/decoraciones.png');
+let escena_bison = new Stage(0, 0, 474, 224, 'img/zangif_sprite_background.png', 'img/decoraciones.png');
+let movimientoDerecha = false;
+let movimientoIzquierda = false;
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
         //Jugador Bison
-        case "ArrowUp":
-            Bison.saltar();
-            break;
-        case "ArrowDown":
-            if (!e.repeat) {
-                Bison.agacharse();
-            }
-            break;
         case "ArrowLeft":
+            // escena_bison.movimiento();
             Bison.izquierda();
+            movimientoIzquierda = true;
             break;
         case "ArrowRight":
-            Bison.derecha();
+            // console.log(Bison.x + Bison.width);
+            // console.log((Bison.x + Bison.width) < escena_bison.sprite_w);
+
+            if ((Bison.x + Bison.width) <= 402) {
+                Bison.derecha();
+
+                movimientoDerecha = true;
+
+            } else {
+                movimientoChulo = false;
+            }
+
             break;
         case "m":
             Bison.golpe();
@@ -701,14 +777,7 @@ document.addEventListener('keydown', (e) => {
 
 
         //Jugador Zangif
-        case "w":
-            Zangif.saltar();
-            break;
-        case "s":
-            if (!e.repeat) {
-                Zangif.agacharse();
-            }
-            break;
+
         case "a":
             Zangif.izquierda();
 
@@ -755,73 +824,16 @@ document.addEventListener('keyup', (e) => {
         case "s":
             Zangif.levantarse();
             break;
+        case "ArrowLeft":
+            // movimientoChulo = false;
+            break;
+        case "ArrowRight":
+            movimientoChulo = false;
+            break;
+        default:
+            break;
     }
 });
-
-let Stage = function (x, y, width, height, img, imgDecoraciones) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.img = img;
-    this.imgDecoraciones = imgDecoraciones;
-    this.frameDelay = 5;
-    this.frameContador = 0;
-    this.dibuja = function () {
-        let sprite = new Image();
-        sprite.src = this.img;
-        ctx.drawImage(sprite, this.sprite_x, this.sprite_y,
-            this.sprite_w, this.sprite_h, this.x, this.y, this.width, this.height);
-    }
-
-    let actualFrame = 0;
-
-    this.animacion = function (nombreAnimacion) {
-        if (this.frameContador >= this.frameDelay) {
-            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
-            let frame = nombreAnimacion[actualFrame];
-            this.sprite_x = frame.x;
-            this.sprite_y = frame.y;
-            this.sprite_w = frame.width;
-            this.sprite_h = frame.height;
-
-            this.frameContador = 0;
-        } else {
-            this.frameContador++;
-        }
-        this.dibuja();
-        this.dibujarObjetos();
-        mostrarContador();
-        // interval_player = requestAnimationFrame(this.animacion.bind(this));
-    }
-    let spriteDecoraciones = new Image();
-    spriteDecoraciones.src = this.imgDecoraciones;
-    this.dibujarObjetos = function () {
-        if (Zangif.tamanybarra >= 145 && Bison.tamanybarra <= 0) {
-            //Ko
-            ctx.drawImage(spriteDecoraciones, 161, 1,
-                32, 14, 173, 18, 32, 14);
-        } else {
-            //Ko
-            ctx.drawImage(spriteDecoraciones, 161, 16,
-                32, 14, 173, 18, 32, 14);
-        }
-
-        if (segundo_10s <= 0 && segundo_1s <= 0) {
-            //TIME OVER
-            ctx.drawImage(spriteDecoraciones, 352, 112,
-                64, 30, 160, 80, 64, 30);
-
-        }
-
-    }
-
-}
-
-
-let escena_ken = new Stage(0, 0, 621, 224, 'img/Ken_Background_sprite.png', 'img/decoraciones.png');
-let escena_bison = new Stage(0, 0, 474, 224, 'img/zangif_sprite_background.png', 'img/decoraciones.png');
-
 function inicio() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
@@ -835,8 +847,14 @@ function principal() {
     mostrarContador('img/decoraciones.png');
 
     if (!cambioEscenario) {
-        escena_bison.dibuja();
-        escena_bison.animacion(bisonEscena);
+        if (Bison.x <= 270) {
+            escena_bison.dibuja();
+            escena_bison.animacion(bisonEscena);
+        } else {
+            escena_bison.animacionCaminar(bisonEscena);
+        }
+
+
     } else {
         escena_ken.dibuja();
         escena_ken.animacion(escenari);

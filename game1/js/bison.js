@@ -124,7 +124,7 @@ let bisonGolpeEspecial = [
 ]
 
 //Bison caminando
-let bisontCaminando = [
+let bisonCaminando = [
     { x: 601, y: 33, width: 105, height: 94 },
     { x: 508, y: 26, width: 80, height: 102 },
     { x: 424, y: 29, width: 69, height: 97 },
