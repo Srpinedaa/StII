@@ -133,3 +133,14 @@ let bisonCaminando = [
     { x: 424, y: 29, width: 69, height: 97 },
     { x: 346, y: 25, width: 66, height: 102 },
 ]
+
+//bison golpeado
+let bisonGettingHit = [
+    { x: 1398, y: 33, width: 99, height: 94 },
+    { x: 1398, y: 33, width: 99, height: 94 },
+    { x: 1398, y: 33, width: 99, height: 94 },
+    { x: 1517, y: 22, width: 94, height: 105 },
+    { x: 1517, y: 22, width: 94, height: 105 },
+    { x: 1517, y: 22, width: 94, height: 105 }
+
+]

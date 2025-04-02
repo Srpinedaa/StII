@@ -99,3 +99,11 @@ let zangifCaminando = [
     { x: 496, y: 569, width: 90, height: 110 },
     { x: 610, y: 568, width: 88, height: 112 },
 ]
+
+
+let zangiefGettingHit = [
+    { x: 22, y: 6688, width: 96, height: 108 },
+    { x: 22, y: 6688, width: 96, height: 108 },
+    { x: 142, y: 6695, width: 109, height: 101 },
+    { x: 142, y: 6695, width: 109, height: 101 }
+]

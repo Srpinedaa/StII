@@ -142,6 +142,8 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
     this.frameDelay = 5;
     this.frameContador = 0;
     this.tamanybarra = 0;
+    this.inmortale = false;
+
     let sprite = new Image();
     sprite.src = this.img;
     this.muertePj = false;
@@ -425,6 +427,39 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         this.dibujarObjetos();
     }
 
+
+
+    this.inmortal = function () {
+        if (this.inmortale) {
+            ctx.fillStyle = '#45c2ea';
+            ctx.fillRect(205, 21, 144, 9);
+            this.muertePj = false
+            paraContador = true;
+            //no morir
+
+            // ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+
+    this.gettingHit = function () {
+        if (this.frameContador >= 3) {
+            actualFrame = (actualFrame + 1) % zangiefGettingHit.length;
+            let frame = zangiefGettingHit[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+    }
 }
 
 let Zangif = new Player1(50, 92, 103, 110, 'img/zangif.png', 'img/decoraciones.png');
@@ -444,6 +479,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
     this.frameDelay = 5;
     this.frameContador = 0;
     this.tamanybarra = 145;
+    this.inmortale = false;
     let sprite = new Image();
     sprite.src = this.img;
 
@@ -561,7 +597,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     this.patada = function () {
-        if (this.frameContador >= 2) {
+        if (this.frameContador >= 3) {
             actualFrame = (actualFrame + 1) % bisonPatada.length;
             let frame = bisonPatada[actualFrame];
             this.sprite_x = frame.x;
@@ -720,6 +756,39 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         }
         this.dibujarObjetos();
     }
+
+
+    this.inmortal = function () {
+        if (this.inmortale) {
+            ctx.fillStyle = '#45c2ea';
+            ctx.fillRect(35, 21, 138, 9);
+            paraContador = true;
+            //no morir
+            // ctx.fillRect(this.x, this.y, this.width, this.height);
+        } else {
+            paraContador = false;
+        }
+    }
+
+    this.gettingHit = function () {
+        if (this.frameContador >= 3) {
+            actualFrame = (actualFrame + 1) % bisonGettingHit.length;
+            let frame = bisonGettingHit[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        if (esPrimeraMuerte1p) {
+            return;
+        }
+    }
 }
 let cambioEscenario = false;
 let Bison = new player2(230, 100, 108, 96, 'img/Bison.png', 'img/decoraciones.png');
@@ -740,16 +809,9 @@ document.addEventListener('keydown', (e) => {
         case "ArrowRight":
             Bison.caminar(1);
             break;
-        case "m":
-            Bison.golpe();
+        case "o":
+            Bison.gettingHit();
             break;
-        case "n":
-            Bison.patada();
-            break;
-        case "t":
-            Bison.golpeEspecial();
-            break;
-
 
 
         //Jugador Zangif
@@ -772,30 +834,39 @@ document.addEventListener('keydown', (e) => {
             break;
         case "b":
             Bison.quitarVida(10);
-            break;
-
-        case "e":
-            console.log('golpe de zangif');
-            Zangif.golpe(); //funciona  
-            break;
-        case "q":
-            console.log('patada de zangif');
-            Zangif.patada();
-            break;
-        case "o":
-            console.log('zangief golpe especial');
-            Zangif.golpeEspecial();
+            so_rounds.play();
             break;
         case "l":
             cambioEscenario = true;
             break;
         case "k":
             cambioEscenario = false;
-
             break;
+        case "c":
+            Zangif.gettingHit();
+        // posicio x y canvas y width height del rectangulo
         default:
             break;
     }
+});
+
+let godBuffer = [];
+
+document.addEventListener('keypress', (e) => {
+
+    godBuffer.push(e.key);
+    if (godBuffer.length > 3) {
+        godBuffer.shift();
+    }
+
+    if (godBuffer.join('') === 'god') {
+        console.log('inmortal');
+        Bison.inmortale = !Bison.inmortale;
+        Zangif.inmortale = !Zangif.inmortale;
+
+        godBuffer = [];
+    }
+
 });
 
 document.addEventListener('keyup', (e) => {
@@ -806,6 +877,53 @@ document.addEventListener('keyup', (e) => {
         case "s":
             Zangif.levantarse();
             break;
+        default:
+
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    switch (e.key) {
+        // Animaciones de Zangif
+        case "q": // Patada
+            animacionActivaZangief = 'patada';
+            so_fights.play();
+            break;
+        case "e": // Golpe
+            animacionActivaZangief = 'golpe';
+            so_cops.play();
+            break;
+        case "r": // Golpe especial
+            animacionActivaZangief = 'golpeEspecial';
+            break;
+
+        // Animaciones de Bison
+        case "m": // Golpe
+            animacionActivaBison = 'golpe';
+            so_cops.play();
+            break;
+        case "n": // Patada
+            animacionActivaBison = 'patada';
+            so_fights.play();
+            break;
+        case "t": // Golpe especial
+            animacionActivaBison = 'golpeEspecial';
+            break;
+
+        default:
+            break;
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    // Detener la animación activa de Zangif
+    if (e.key === "q" || e.key === "e" || e.key === "r") {
+        animacionActivaZangief = null;
+    }
+
+    // Detener la animación activa de Bison
+    if (e.key === "m" || e.key === "n" || e.key === "t") {
+        animacionActivaBison = null;
     }
 });
 
@@ -881,6 +999,11 @@ function inicio() {
 }
 // let victoriaP1 = false;
 // let victoriaP2 = false;
+
+let animacionActivaZangief = null; // Variable para rastrear la animación activa
+let animacionActivaBison = null; // Variable para rastrear la animación activa de Bison
+
+
 function principal() {
     borrarCanvas();
     mostrarContador('img/decoraciones.png');
@@ -945,10 +1068,36 @@ function principal() {
         Bison.muerteP2();
         paraContador = true;
     }
+
+    // Llamar a la animación activa de Zangif
+    if (animacionActivaZangief === 'patada') {
+        Zangif.patada();
+    } else if (animacionActivaZangief === 'golpe') {
+        Zangif.golpe();
+    } else if (animacionActivaZangief === 'golpeEspecial') {
+        Zangif.golpeEspecial();
+    }
+
+
+    // Llamar a la animación activa de Bison
+    if (animacionActivaBison === 'patada') {
+        Bison.patada();
+    } else if (animacionActivaBison === 'golpe') {
+        Bison.golpe();
+    } else if (animacionActivaBison === 'golpeEspecial') {
+        Bison.golpeEspecial();
+    }
+
     escena_bison.dibujarObjetos();
 
 
+    Bison.inmortal();
+
+    Zangif.inmortal();
+
     muerte();
+
+
 
     interval = requestAnimationFrame(principal);
 }
@@ -956,25 +1105,32 @@ function principal() {
 
 
 function muerte() {
-    if (Zangif.tamanybarra >= 145) {
-        // setInterval(() => {
+    if (!Zangif.inmortale && Zangif.tamanybarra >= 145) {
         Zangif.tamanybarra = 0;
-        // }, 2000);
 
         if (esPrimeraMuerte1p) {
             esSegundaMuerte1p = true;
         }
         esPrimeraMuerte1p = true;
 
+        victoria.play();
+        derrota.play();
+
+
     }
-    if (Bison.tamanybarra <= 0) {
-        // setInterval(() => {
+
+    if (!Bison.inmortale && Bison.tamanybarra <= 0) {
         Bison.tamanybarra = 145;
-        // }, 2000);
+
         if (esPrimeraMuerte2p) {
             esSegundaMuerte2p = true;
         }
         esPrimeraMuerte2p = true;
+
+        victoria.play();
+        derrota.play();
+
+
     }
 }
 
