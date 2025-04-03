@@ -12,10 +12,72 @@ let esSegundaMuerte2p = false;
 let gameOver = false;
 let paraContador = false;
 let spriteDecoraciones = new Image();
+let derrotaPj = false;
 spriteDecoraciones.src = 'img/decoraciones.png';
 document.addEventListener('DOMContentLoaded', inicio);
 
 
+function menuPrincipal() {
+
+}
+
+let mapas = function (x, y, width, height, img, imgDecoraciones) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.img = img;
+    this.imgDecoraciones = imgDecoraciones;
+    this.frameDelay = 5;
+    this.frameContador = 0;
+    this.dibuja = function () {
+        let sprite = new Image();
+        sprite.src = this.img;
+        ctx.drawImage(sprite, this.sprite_x, this.sprite_y,
+            this.sprite_w, this.sprite_h, this.x, this.y, this.width, this.height);
+    }
+
+    let actualFrame = 0;
+
+    this.animacion = function (nombreAnimacion) {
+        if (this.frameContador >= this.frameDelay) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        this.dibuja();
+        this.dibujarObjetos();
+        mostrarContador();
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+    let spriteDecoraciones = new Image();
+    spriteDecoraciones.src = this.imgDecoraciones;
+    this.dibujarObjetos = function () {
+        if (Zangif.tamanybarra >= 145 && Bison.tamanybarra <= 0) {
+            //Ko
+            ctx.drawImage(spriteDecoraciones, 161, 1,
+                32, 14, 173, 18, 32, 14);
+        } else {
+            //Ko
+            ctx.drawImage(spriteDecoraciones, 161, 16,
+                32, 14, 173, 18, 32, 14);
+        }
+
+        if (segundo_10s <= 0 && segundo_1s <= 0) {
+            //TIME OVER
+            ctx.drawImage(spriteDecoraciones, 352, 112,
+                64, 30, 160, 80, 64, 30);
+        }
+
+    }
+}
 
 function mostrarContador() {
     contadorFrames++;
@@ -201,12 +263,12 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         }
         this.dibuja();
         this.dibujarObjetos();
-        if (esPrimeraMuerte1p) {
-            return;
-        }
+        // if (esPrimeraMuerte1p) {
+        //     return;
+        // }
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
-    this.victoriaP1 = function (nombreAnimacion) {
+    this.victoriaP1 = function (nombreAnimacion, posicionActual) {
         if (actualFrame != nombreAnimacion.length - 1) {
             actualFrame = (actualFrame + 1) % nombreAnimacion.length;
             let frame = nombreAnimacion[actualFrame];
@@ -219,12 +281,13 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         } else {
             // this.frameContador++;
         }
+        this.x = posicionActual;
         this.dibuja();
         this.dibujarObjetos();
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.muerteP1 = function () {
+    this.muerteP1 = function (posicionActual) {
         if (actualFrame != zangifMuerte.length - 1) {
             actualFrame = (actualFrame + 1) % zangifMuerte.length;
             let frame = zangifMuerte[actualFrame];
@@ -238,6 +301,7 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         } else {
             // this.frameContador++;
         }
+        this.x = posicionActual;
         this.dibuja();
         this.dibujarObjetos();
     }
@@ -339,27 +403,6 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
     this.derecha = function () {
         this.x += this.velocidadX;
     }
-    this.saltar = function () {
-        if (this.y >= 180) {
-            this.y -= this.gravedad * 40;
-        }
-    }
-    this.descender = function () {
-        if (this.y < (canvas.height - this.height)) {
-            this.y += this.gravedad;
-        }
-    }
-
-    this.agacharse = function () {
-        this.height = this.height / 2;
-        this.y = this.y + this.height;
-        this.dibuja();
-    }
-
-    this.levantarse = function () {
-        this.animacion();
-        this.dibuja();
-    }
 
     let spriteDecoraciones = new Image();
     spriteDecoraciones.src = this.imgDecoraciones;
@@ -434,10 +477,10 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
             ctx.fillStyle = '#45c2ea';
             ctx.fillRect(205, 21, 144, 9);
             this.muertePj = false
-            paraContador = true;
             //no morir
 
             // ctx.fillRect(this.x, this.y, this.width, this.height);
+        } else {
         }
     }
 
@@ -536,7 +579,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         this.dibujarObjetos();
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
-    this.victoriaP2 = function (nombreAnimacion) {
+    this.victoriaP2 = function (nombreAnimacion, posicionActual) {
         if (actualFrame != nombreAnimacion.length - 1) {
             actualFrame = (actualFrame + 1) % nombreAnimacion.length;
             let frame = nombreAnimacion[actualFrame];
@@ -544,17 +587,18 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
             this.sprite_h = frame.height;
-
+            this.x = posicionActual;
             this.frameContador = 0;
         } else {
             // this.frameContador++;
         }
+        // console.log(posicionActual);
         this.dibuja();
         this.dibujarObjetos();
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.muerteP2 = function () {
+    this.muerteP2 = function (posicionActual) {
         if (actualFrame != bisonMuerte.length - 1) {
             actualFrame = (actualFrame + 1) % bisonMuerte.length;
             let frame = bisonMuerte[actualFrame];
@@ -564,6 +608,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
             this.sprite_h = frame.height;
             this.muertePj = true;
             this.y = 150;
+            this.x = posicionActual;
 
             this.frameContador = 0;
         } else {
@@ -673,27 +718,6 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
     this.derecha = function () {
         this.x += this.velocidadX;
     }
-    this.saltar = function () {
-        if (this.y >= 180) {
-            this.y -= this.gravedad * 40;
-        }
-    }
-    this.descender = function () {
-        if (this.y < (canvas.height - this.height)) {
-            this.y += this.gravedad;
-        }
-    }
-
-    this.agacharse = function () {
-        this.height = this.height / 2;
-        this.y = this.y + this.height;
-        this.dibuja();
-        this.dibujarObjetos();
-    }
-
-    this.levantarse = function () {
-        this.animacion();
-    }
     let spriteDecoraciones = new Image();
     spriteDecoraciones.src = this.imgDecoraciones;
     let victoriaPersonaje = false;
@@ -762,11 +786,9 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         if (this.inmortale) {
             ctx.fillStyle = '#45c2ea';
             ctx.fillRect(35, 21, 138, 9);
-            paraContador = true;
             //no morir
             // ctx.fillRect(this.x, this.y, this.width, this.height);
         } else {
-            paraContador = false;
         }
     }
 
@@ -795,14 +817,6 @@ let Bison = new player2(230, 100, 108, 96, 'img/Bison.png', 'img/decoraciones.pn
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
         //Jugador Bison
-        case "ArrowUp":
-            Bison.saltar();
-            break;
-        case "ArrowDown":
-            if (!e.repeat) {
-                Bison.agacharse();
-            }
-            break;
         case "ArrowLeft":
             Bison.caminar(0);
             break;
@@ -815,14 +829,6 @@ document.addEventListener('keydown', (e) => {
 
 
         //Jugador Zangif
-        case "w":
-            Zangif.saltar();
-            break;
-        case "s":
-            if (!e.repeat) {
-                Zangif.agacharse();
-            }
-            break;
         case "a":
             Zangif.caminar(0);
             break;
@@ -868,14 +874,40 @@ document.addEventListener('keypress', (e) => {
     }
 
 });
-
+let golpeBison = false;
+let golpeEspecialBison = false;
+let golpeZangif = false;
+let golpeEspecialZangif = false;
+let bisonGolpeando = 0;
+let zangifGolpeando = 0;
 document.addEventListener('keyup', (e) => {
     switch (e.key) {
-        case "ArrowDown":
-            Bison.levantarse();
+        case "m":
+            golpeBison = false;
+            bisonGolpeando = (Bison.x + Bison.width) + 90;
             break;
-        case "s":
-            Zangif.levantarse();
+        case "q": // Patada
+            golpeZangif = false;
+            zangifGolpeando = (Zangif.x + Zangif.width) - 90;
+            break;
+        case "e": // Golpe
+            golpeZangif = false;
+            zangifGolpeando = (Zangif.x + Zangif.width) - 90;
+            break;
+        case "r": // Golpe especial
+            golpeZangif = false;
+            golpeEspecialZangif = false;
+            zangifGolpeando = (Zangif.x + Zangif.width) - 90;
+            break;
+        case "n": // Patada
+            golpeBison = false;
+            bisonGolpeando = (Bison.x + Bison.width) + 90;
+
+            break;
+        case "t": // Golpe especial
+            golpeBison = false;
+            golpeEspecialBison = false;
+            bisonGolpeando = (Bison.x + Bison.width) + 90;
             break;
         default:
 
@@ -887,27 +919,44 @@ document.addEventListener('keydown', (e) => {
         // Animaciones de Zangif
         case "q": // Patada
             animacionActivaZangief = 'patada';
+            golpeZangif = true;
             so_fights.play();
+            zangifGolpeando = (Zangif.x + Zangif.width) + 90;
+
             break;
         case "e": // Golpe
             animacionActivaZangief = 'golpe';
+            golpeZangif = true;
+            zangifGolpeando = (Zangif.x + Zangif.width) + 90;
             so_cops.play();
             break;
         case "r": // Golpe especial
             animacionActivaZangief = 'golpeEspecial';
+            golpeEspecialZangif = true;
+            golpeZangif = true;
+            zangifGolpeando = (Zangif.x + Zangif.width) + 90;
             break;
 
         // Animaciones de Bison
         case "m": // Golpe
+            golpeBison = true;
             animacionActivaBison = 'golpe';
+            bisonGolpeando = (Bison.x + Bison.width) - 90;
+
             so_cops.play();
             break;
         case "n": // Patada
+            golpeBison = true;
             animacionActivaBison = 'patada';
+            bisonGolpeando = (Bison.x + Bison.width) - 90;
+
             so_fights.play();
             break;
         case "t": // Golpe especial
             animacionActivaBison = 'golpeEspecial';
+            golpeEspecialBison = true;
+            golpeBison = true;
+            bisonGolpeando = (Bison.x + Bison.width) - 90;
             break;
 
         default:
@@ -980,7 +1029,6 @@ let Stage = function (x, y, width, height, img, imgDecoraciones) {
             //TIME OVER
             ctx.drawImage(spriteDecoraciones, 352, 112,
                 64, 30, 160, 80, 64, 30);
-
         }
 
     }
@@ -997,8 +1045,6 @@ function inicio() {
 
     principal();
 }
-// let victoriaP1 = false;
-// let victoriaP2 = false;
 
 let animacionActivaZangief = null; // Variable para rastrear la animación activa
 let animacionActivaBison = null; // Variable para rastrear la animación activa de Bison
@@ -1007,7 +1053,7 @@ let animacionActivaBison = null; // Variable para rastrear la animación activa 
 function principal() {
     borrarCanvas();
     mostrarContador('img/decoraciones.png');
-
+    // console.log(paraContador);
     if (!cambioEscenario) {
         escena_bison.dibuja();
         escena_bison.animacion(bisonEscena);
@@ -1016,46 +1062,45 @@ function principal() {
         escena_ken.animacion(escenari);
     }
 
-    Bison.dibuja();
-    Bison.dibujarObjetos();
-    let animacion1p = "";
-    if (esPrimeraMuerte1p) {
-        animacion1p = bisonVictory;
-        Bison.x = 280;
-        //Bison.golpe();
 
+    let animacion1p = "";
+    if (esPrimeraMuerte1p && derrotaPj) {
+        animacion1p = bisonVictory;
     } else {
-        animacion1p = bisonReady;
         if (!Bison.muertePj) {
-            Bison.animacion(animacion1p);
+            console.log("Entra");
+            Bison.animacion(bisonReady);
         }
     }
     if (esSegundaMuerte1p) {
         animacion1p = bisonVictoryAlternate;
-        Bison.x = 250;
     }
     if (esPrimeraMuerte1p == true || esSegundaMuerte1p == true) {
-        Bison.victoriaP2(animacion1p);
-        Zangif.muerteP1();
-        paraContador = true;
+        if (derrotaPj) {
+            Bison.victoriaP2(animacion1p, Bison.x);
+            Zangif.muerteP1(Zangif.x);
+            paraContador = true;
+
+        }
+
     }
 
     // Bison.descender();
     Zangif.dibuja();
     Zangif.dibujarObjetos();
 
-
+    Bison.dibuja();
+    Bison.dibujarObjetos();
 
     let animacion2p = "";
 
-    if (esPrimeraMuerte2p) {
-
+    if (esPrimeraMuerte2p && derrotaPj) {
         animacion2p = ZangiefVictory;
         paraContador = true;
     } else {
         if (!Zangif.muertePj) {
+            console.log("Entra");
             Zangif.animacion(ZangifReady);
-
         }
     }
     if (esSegundaMuerte2p) {
@@ -1064,9 +1109,12 @@ function principal() {
         paraContador = true;
     }
     if (esPrimeraMuerte2p == true || esSegundaMuerte2p == true) {
-        Zangif.victoriaP1(animacion2p);
-        Bison.muerteP2();
-        paraContador = true;
+        if (derrotaPj) {
+            Zangif.victoriaP1(animacion2p, Zangif.x);
+            Bison.muerteP2(Bison.x);
+            paraContador = true;
+        }
+
     }
 
     // Llamar a la animación activa de Zangif
@@ -1087,7 +1135,7 @@ function principal() {
     } else if (animacionActivaBison === 'golpeEspecial') {
         Bison.golpeEspecial();
     }
-
+    colision();
     escena_bison.dibujarObjetos();
 
 
@@ -1104,7 +1152,17 @@ function principal() {
 
 
 
+function reiniciarJuego() {
+    console.log("Reiniciar Juego");
+    Bison.muertePj = false;
+    Zangif.muertePj = false;
+    derrotaPj = false;
+    paraContador = false;
+    principal();
+}
+
 function muerte() {
+    derrotaPj = true;
     if (!Zangif.inmortale && Zangif.tamanybarra >= 145) {
         Zangif.tamanybarra = 0;
 
@@ -1116,7 +1174,7 @@ function muerte() {
         victoria.play();
         derrota.play();
 
-
+        setTimeout(reiniciarJuego, 3000);
     }
 
     if (!Bison.inmortale && Bison.tamanybarra <= 0) {
@@ -1130,7 +1188,7 @@ function muerte() {
         victoria.play();
         derrota.play();
 
-
+        setTimeout(reiniciarJuego, 3000);
     }
 }
 
@@ -1138,3 +1196,30 @@ function muerte() {
 function borrarCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+function colision() {
+    if (golpeBison) {
+        // console.log(bisonGolpeando);
+        if (bisonGolpeando <= (Zangif.x + Zangif.width)) {
+            Zangif.gettingHit();
+            if (golpeEspecialBison) {
+                Zangif.quitarVida(10);
+            } else {
+                Zangif.quitarVida(2);
+            }
+
+        }
+    }
+
+    if (golpeZangif) {
+
+        if (zangifGolpeando >= (Bison.x + Bison.width)) {
+            Bison.gettingHit();
+            if (golpeEspecialBison) {
+                Bison.quitarVida(10);
+            } else {
+                Bison.quitarVida(2);
+            }
+        }
+    }
+} 
