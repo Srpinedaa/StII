@@ -308,7 +308,7 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
 
     //zangif golpe punyo
     this.golpe = function () {
-        if (this.frameContador >= 2) {
+        if (this.frameContador >= 4) {
             actualFrame = (actualFrame + 1) % zangifPunyo.length;
             let frame = zangifPunyo[actualFrame];
             this.sprite_x = frame.x;
@@ -329,7 +329,7 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     this.patada = function () {
-        if (this.frameContador >= 4) {
+        if (this.frameContador >= 5) {
             actualFrame = (actualFrame + 1) % zangifPatada.length;
             let frame = zangifPatada[actualFrame];
             this.sprite_x = frame.x;
@@ -350,7 +350,7 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     this.golpeEspecial = function () {
-        if (this.frameContador >= 3) {
+        if (this.frameContador >= 5) {
             actualFrame = (actualFrame + 1) % zangifGolpeEspecial.length;
             let frame = zangifGolpeEspecial[actualFrame];
             this.sprite_x = frame.x;
@@ -642,20 +642,26 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     this.patada = function () {
-        if (this.frameContador >= 3) {
+        if (this.frameContador >= 5) {
             actualFrame = (actualFrame + 1) % bisonPatada.length;
             let frame = bisonPatada[actualFrame];
-            this.sprite_x = frame.x;
-            this.sprite_y = frame.y;
-            this.sprite_w = frame.width;
-            this.sprite_h = frame.height;
+        this.sprite_x = frame.x;
+        this.sprite_y = frame.y;
+        this.sprite_w = frame.width;
+        this.sprite_h = frame.height;
 
-            this.frameContador = 0;
-        } else {
-            this.frameContador++;
+        this.frameContador = 0;
+
+        if (actualFrame === zangifPatada.length - 1) {
+            animacionActivaZangief = null;
         }
-        this.dibuja();
-        this.dibujarObjetos();
+    } else {
+        this.frameContador++;
+    }
+
+    // Dibujar el frame actual
+    this.dibuja();
+    this.dibujarObjetos();
         if (esPrimeraMuerte1p) {
             return;
         }
@@ -673,6 +679,11 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
             this.sprite_h = frame.height;
 
             this.frameContador = 0;
+
+        this.x -= this.velocidadX; 
+        if (this.x < 0) {
+            this.x = 0; 
+        }
         } else {
             this.frameContador++;
         }
@@ -919,50 +930,81 @@ document.addEventListener('keydown', (e) => {
         // Animaciones de Zangif
         case "q": // Patada
             animacionActivaZangief = 'patada';
+<<<<<<< HEAD
             golpeZangif = true;
+=======
+            Zangif.frameContador = 0; 
+            Zangif.actualFrame = 0; 
+>>>>>>> StII/develop
             so_fights.play();
             zangifGolpeando = (Zangif.x + Zangif.width) + 90;
 
             break;
         case "e": // Golpe
             animacionActivaZangief = 'golpe';
+<<<<<<< HEAD
             golpeZangif = true;
             zangifGolpeando = (Zangif.x + Zangif.width) + 90;
+=======
+            Zangif.frameContador = 0;
+            Zangif.actualFrame = 0;
+>>>>>>> StII/develop
             so_cops.play();
             break;
         case "r": // Golpe especial
             animacionActivaZangief = 'golpeEspecial';
+<<<<<<< HEAD
             golpeEspecialZangif = true;
             golpeZangif = true;
             zangifGolpeando = (Zangif.x + Zangif.width) + 90;
+=======
+            Zangif.frameContador = 0;
+            Zangif.actualFrame = 0;
+>>>>>>> StII/develop
             break;
 
         // Animaciones de Bison
         case "m": // Golpe
             golpeBison = true;
             animacionActivaBison = 'golpe';
+<<<<<<< HEAD
             bisonGolpeando = (Bison.x + Bison.width) - 90;
 
+=======
+            Bison.frameContador = 0;
+            Bison.actualFrame = 0;
+>>>>>>> StII/develop
             so_cops.play();
             break;
         case "n": // Patada
             golpeBison = true;
             animacionActivaBison = 'patada';
+<<<<<<< HEAD
             bisonGolpeando = (Bison.x + Bison.width) - 90;
 
+=======
+            Bison.frameContador = 0;
+            Bison.actualFrame = 0;
+>>>>>>> StII/develop
             so_fights.play();
             break;
         case "t": // Golpe especial
             animacionActivaBison = 'golpeEspecial';
+<<<<<<< HEAD
             golpeEspecialBison = true;
             golpeBison = true;
             bisonGolpeando = (Bison.x + Bison.width) - 90;
+=======
+            Bison.frameContador = 0;
+            Bison.actualFrame = 0;
+>>>>>>> StII/develop
             break;
 
         default:
             break;
     }
 });
+
 
 document.addEventListener('keyup', (e) => {
     // Detener la animación activa de Zangif

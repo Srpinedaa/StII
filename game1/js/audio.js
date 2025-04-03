@@ -44,52 +44,24 @@ function inici() {
 
 function iniciar_listener() {
     console.log("Listener iniciat");
-    musicaEscenari.play();
-
-    /*document.addEventListener('keydown', function (event) {
-        if (event.code == 'X') {
-            console.log("x");
-            so_cops.play();
-        }else if (event.code == 'T') {
-            so_cops.stop();
+    
+    document.addEventListener('keydown', (e) => {
+        switch (e.key) {
+            case "1": 
+                if (!musicaEscenari.playing()) {
+                    musicaEscenari.play();
+                    console.log("Música activada");
+                }
+                break;
+            case "2": 
+                if (musicaEscenari.playing()) {
+                    musicaEscenari.pause();
+                    console.log("Música desactivada");
+                }
+                break;
+            default:
+                break;
         }
-
     });
-
-
-    document.addEventListener('keydown', function (event) {
-        if (event.code == 'E') {
-            so_rounds.play();
-        }
-
-    });
-    document.addEventListener('keydown', function (event) {
-        if (event.code == 'F') {
-            so_fights.play();
-        }
-
-    });
-    document.addEventListener('keydown', function (event) {
-        if (event.code == 'V') {
-        }
-
-    });
-    document.addEventListener('keydown', function (event) {
-        if (event.code == 'D') {
-            derrota.play();
-        }
-
-    });
-    document.addEventListener('keydown', function (event) {
-        if (event.code == 'KeyM') {
-            if (musicaEscenari.playing()) {
-                musicaEscenari.pause();
-            } else {
-                musicaEscenari.play();
-            }
-        }
-
-    });*/
-   
 }
 
