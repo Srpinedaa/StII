@@ -13,6 +13,7 @@ let gameOver = false;
 let paraContador = false;
 let spriteDecoraciones = new Image();
 let derrotaPj = false;
+let isCrossover = false;
 spriteDecoraciones.src = 'img/decoraciones.png';
 document.addEventListener('DOMContentLoaded', inicio);
 
@@ -287,10 +288,10 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.muerteP1 = function (posicionActual) {
-        if (actualFrame != zangifMuerte.length - 1) {
-            actualFrame = (actualFrame + 1) % zangifMuerte.length;
-            let frame = zangifMuerte[actualFrame];
+    this.muerteP1 = function (nombreAnimacion, posicionActual) {
+        if (actualFrame != nombreAnimacion.length - 1) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -307,10 +308,10 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     //zangif golpe punyo
-    this.golpe = function () {
-        if (this.frameContador >= 4) {
-            actualFrame = (actualFrame + 1) % zangifPunyo.length;
-            let frame = zangifPunyo[actualFrame];
+    this.golpe = function (nombreAnimacion) {
+        if (actualFrame != nombreAnimacion.length - 1) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -328,10 +329,10 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.patada = function () {
-        if (this.frameContador >= 5) {
-            actualFrame = (actualFrame + 1) % zangifPatada.length;
-            let frame = zangifPatada[actualFrame];
+    this.patada = function (nombreAnimacion) {
+        if (actualFrame != nombreAnimacion.length - 1) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -339,7 +340,7 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
 
             this.frameContador = 0;
         } else {
-            this.frameContador++;
+            // this.frameContador++;
         }
         this.dibuja();
         this.dibujarObjetos();
@@ -350,7 +351,7 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     this.golpeEspecial = function () {
-        if (this.frameContador >= 5) {
+        if (actualFrame != zangifGolpeEspecial.length - 1) {
             actualFrame = (actualFrame + 1) % zangifGolpeEspecial.length;
             let frame = zangifGolpeEspecial[actualFrame];
             this.sprite_x = frame.x;
@@ -370,10 +371,10 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.caminar = function (esIzquierda) {
+    this.caminar = function (nombreAnimacion, esIzquierda) {
         if (this.frameContador >= 4) {
-            actualFrame = (actualFrame + 1) % zangifCaminando.length;
-            let frame = zangifCaminando[actualFrame];
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -484,10 +485,10 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
         }
     }
 
-    this.gettingHit = function () {
+    this.gettingHit = function (nombreAnimacion) {
         if (this.frameContador >= 3) {
-            actualFrame = (actualFrame + 1) % zangiefGettingHit.length;
-            let frame = zangiefGettingHit[actualFrame];
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -506,6 +507,7 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
 }
 
 let Zangif = new Player1(50, 92, 103, 110, 'img/zangif.png', 'img/decoraciones.png');
+let Mario = new Player1(150, 133, 25, 36, 'img/mario.png', 'img/decoraciones.png');
 
 
 let player2 = function (x, y, width, height, img, imgDecoraciones) {
@@ -598,10 +600,10 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.muerteP2 = function (posicionActual) {
-        if (actualFrame != bisonMuerte.length - 1) {
-            actualFrame = (actualFrame + 1) % bisonMuerte.length;
-            let frame = bisonMuerte[actualFrame];
+    this.muerteP2 = function (nombreAnimacion, posicionActual) {
+        if (actualFrame != nombreAnimacion.length - 1) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -620,10 +622,10 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
     //bison golpe punyo
-    this.golpe = function () {
-        if (this.frameContador >= 3) {
-            actualFrame = (actualFrame + 1) % bisonPunyo.length;
-            let frame = bisonPunyo[actualFrame];
+    this.golpe = function (nombreAnimacion) {
+        if (actualFrame != nombreAnimacion.length - 1) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -631,7 +633,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
 
             this.frameContador = 0;
         } else {
-            this.frameContador++;
+            // this.frameContador++;
         }
         this.dibuja();
         this.dibujarObjetos();
@@ -641,10 +643,10 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         // interval_player = requestAnimationFrame(this.animacion.bind(this));
     }
 
-    this.patada = function () {
-        if (this.frameContador >= 5) {
-            actualFrame = (actualFrame + 1) % bisonPatada.length;
-            let frame = bisonPatada[actualFrame];
+    this.patada = function (nombreAnimacion) {
+        if (actualFrame != nombreAnimacion.length - 1) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -656,7 +658,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
                 animacionActivaZangief = null;
             }
         } else {
-            this.frameContador++;
+            // this.frameContador++;
         }
 
         // Dibujar el frame actual
@@ -670,7 +672,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
 
     //bison golpe especial
     this.golpeEspecial = function () {
-        if (this.frameContador >= 3) {
+        if (actualFrame != bisonGolpeEspecial.length - 1) {
             actualFrame = (actualFrame + 1) % bisonGolpeEspecial.length;
             let frame = bisonGolpeEspecial[actualFrame];
             this.sprite_x = frame.x;
@@ -685,7 +687,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
                 this.x = 0;
             }
         } else {
-            this.frameContador++;
+            // this.frameContador++;
         }
         this.dibuja();
         this.dibujarObjetos();
@@ -696,10 +698,10 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
     }
 
 
-    this.caminar = function (esIzquierda) {
+    this.caminar = function (nombreAnimacion, esIzquierda) {
         if (this.frameContador >= 3) {
-            actualFrame = (actualFrame + 1) % bisonCaminando.length;
-            let frame = bisonCaminando[actualFrame];
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -783,6 +785,7 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         ctx.drawImage(spriteDecoraciones, 290, 71,
             61, 10, 305, 35, 61, 10);
 
+
     }
 
     this.quitarVida = function (mal) {
@@ -803,10 +806,10 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         }
     }
 
-    this.gettingHit = function () {
-        if (this.frameContador >= 3) {
-            actualFrame = (actualFrame + 1) % bisonGettingHit.length;
-            let frame = bisonGettingHit[actualFrame];
+    this.gettingHit = function (nombreAnimacion) {
+        if (actualFrame != nombreAnimacion.length - 1) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
             this.sprite_x = frame.x;
             this.sprite_y = frame.y;
             this.sprite_w = frame.width;
@@ -823,34 +826,39 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
         }
     }
 }
+let Luffy = new player2(250, 125, 34, 43, 'img/luffy.png', 'img/decoraciones.png');
 let cambioEscenario = false;
 let Bison = new player2(230, 100, 108, 96, 'img/Bison.png', 'img/decoraciones.png');
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
         //Jugador Bison
         case "ArrowLeft":
-            Bison.caminar(0);
+            Bison.caminar(bisonCaminando, 0);
+            Luffy.caminar(luffyCaminar, 0);
             break;
         case "ArrowRight":
-            Bison.caminar(1);
+            Bison.caminar(bisonCaminando, 1);
+            Luffy.caminar(luffyCaminar, 1);
             break;
         case "o":
-            Bison.gettingHit();
+            // Bison.gettingHit();
             break;
 
 
         //Jugador Zangif
         case "a":
-            Zangif.caminar(0);
+            Zangif.caminar(zangifCaminando, 0);
+            Mario.caminar(marioCaminar, 0);
             break;
         case "d":
-            Zangif.caminar(1);
+            Zangif.caminar(zangifCaminando, 1);
+            Mario.caminar(marioCaminar, 1);
             break;
         case "z":
-            Zangif.quitarVida(10);
+            // Zangif.quitarVida(10);
             break;
         case "b":
-            Bison.quitarVida(10);
+            // Bison.quitarVida(10);
             so_rounds.play();
             break;
         case "l":
@@ -860,7 +868,7 @@ document.addEventListener('keydown', (e) => {
             cambioEscenario = false;
             break;
         case "c":
-            Zangif.gettingHit();
+        // Zangif.gettingHit();
         // posicio x y canvas y width height del rectangulo
         default:
             break;
@@ -885,40 +893,66 @@ document.addEventListener('keypress', (e) => {
     }
 
 });
+let animacionActivaZangief = null;
+let animacionActivaBison = null;
+let animacionActivaLuffy = null;
+let animacionActivaMario = null;
 let golpeBison = false;
 let golpeEspecialBison = false;
 let golpeZangif = false;
 let golpeEspecialZangif = false;
 let bisonGolpeando = 0;
 let zangifGolpeando = 0;
+let luffyGolpe = false;
+let marioGolpe = false;
+let luffyGolpeando = 0;
+let marioGolpeando = 0;
 document.addEventListener('keyup', (e) => {
     switch (e.key) {
         case "m":
-            golpeBison = false;
             bisonGolpeando = (Bison.x + Bison.width) + 90;
+            luffyGolpeando = (Luffy.x + Luffy.width) + 30;
+            setTimeout(() => {
+                golpeBison = false;
+
+                luffyGolpe = false;
+            }, 400);
+            break;
+        case "n": // Patada
+            bisonGolpeando = (Bison.x + Bison.width) + 90;
+            luffyGolpeando = (Luffy.x + Luffy.width) + 30;
+            setTimeout(() => {
+                golpeBison = false;
+                luffyGolpe = false;
+
+            }, 400);
+            break;
+        case "t": // Golpe especial
+            golpeBison = false;
+            golpeEspecialBison = false;
             break;
         case "q": // Patada
-            golpeZangif = false;
             zangifGolpeando = (Zangif.x + Zangif.width) - 90;
+            marioGolpeando = (Mario.x + Mario.width) - 50;
+            setTimeout(() => {
+                marioGolpe = false;
+                golpeZangif = false;
+
+            }, 500);
             break;
         case "e": // Golpe
-            golpeZangif = false;
             zangifGolpeando = (Zangif.x + Zangif.width) - 90;
+            marioGolpeando = (Mario.x + Mario.width) - 50;
+            setTimeout(() => {
+                marioGolpe = false;
+                golpeZangif = false;
+
+            }, 500);
             break;
         case "r": // Golpe especial
             golpeZangif = false;
             golpeEspecialZangif = false;
             zangifGolpeando = (Zangif.x + Zangif.width) - 90;
-            break;
-        case "n": // Patada
-            golpeBison = false;
-            bisonGolpeando = (Bison.x + Bison.width) + 90;
-
-            break;
-        case "t": // Golpe especial
-            golpeBison = false;
-            golpeEspecialBison = false;
-            bisonGolpeando = (Bison.x + Bison.width) + 90;
             break;
         default:
 
@@ -930,27 +964,32 @@ document.addEventListener('keydown', (e) => {
         // Animaciones de Zangif
         case "q": // Patada
             animacionActivaZangief = 'patada';
+            animacionActivaMario = 'patada';
             golpeZangif = true;
 
             Zangif.frameContador = 0;
             Zangif.actualFrame = 0;
-
-            so_fights.play();
+            marioGolpeando = (Mario.x + Mario.width) + 50;
+            marioGolpe = true;
             zangifGolpeando = (Zangif.x + Zangif.width) + 90;
+            so_fights.play();
 
             break;
         case "e": // Golpe
             animacionActivaZangief = 'golpe';
+            animacionActivaMario = 'golpe';
             golpeZangif = true;
             zangifGolpeando = (Zangif.x + Zangif.width) + 90;
 
             Zangif.frameContador = 0;
             Zangif.actualFrame = 0;
-
+            marioGolpeando = (Mario.x + Mario.width) + 50;
+            marioGolpe = true;
             so_cops.play();
             break;
         case "r": // Golpe especial
             animacionActivaZangief = 'golpeEspecial';
+            animacionActivaMario = 'golpeEspecial';
             golpeEspecialZangif = true;
             golpeZangif = true;
             zangifGolpeando = (Zangif.x + Zangif.width) + 90;
@@ -964,21 +1003,22 @@ document.addEventListener('keydown', (e) => {
         case "m": // Golpe
             golpeBison = true;
             animacionActivaBison = 'golpe';
-
+            animacionActivaLuffy = 'golpe';
             bisonGolpeando = (Bison.x + Bison.width) - 90;
 
             Bison.frameContador = 0;
             Bison.actualFrame = 0;
-
+            luffyGolpe = true;
+            luffyGolpeando = (Luffy.x + Luffy.width) - 30;
             so_cops.play();
             break;
         case "n": // Patada
             golpeBison = true;
             animacionActivaBison = 'patada';
-
+            animacionActivaLuffy = 'patada';
             bisonGolpeando = (Bison.x + Bison.width) - 90;
-
-
+            luffyGolpe = true;
+            luffyGolpeando = (Luffy.x + Luffy.width) - 30;
             Bison.frameContador = 0;
             Bison.actualFrame = 0;
 
@@ -986,7 +1026,7 @@ document.addEventListener('keydown', (e) => {
             break;
         case "t": // Golpe especial
             animacionActivaBison = 'golpeEspecial';
-
+            animacionActivaLuffy = 'golpeEspecial';
             golpeEspecialBison = true;
             golpeBison = true;
             bisonGolpeando = (Bison.x + Bison.width) - 90;
@@ -994,7 +1034,6 @@ document.addEventListener('keydown', (e) => {
             Bison.actualFrame = 0;
 
             break;
-
         default:
             break;
     }
@@ -1003,14 +1042,20 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('keyup', (e) => {
     // Detener la animación activa de Zangif
-    if (e.key === "q" || e.key === "e" || e.key === "r") {
-        animacionActivaZangief = null;
-    }
+    setTimeout(() => {
+        if (e.key === "q" || e.key === "e" || e.key === "r") {
+            animacionActivaZangief = null;
+            animacionActivaMario = null;
+        }
+        if (e.key === "m" || e.key === "n" || e.key === "t") {
+            animacionActivaBison = null;
+            animacionActivaLuffy = null;
+        }
+    }, 500);
+
 
     // Detener la animación activa de Bison
-    if (e.key === "m" || e.key === "n" || e.key === "t") {
-        animacionActivaBison = null;
-    }
+
 });
 
 let Stage = function (x, y, width, height, img, imgDecoraciones) {
@@ -1075,21 +1120,104 @@ let Stage = function (x, y, width, height, img, imgDecoraciones) {
 
 let escena_ken = new Stage(0, 0, 621, 224, 'img/Ken_Background_sprite.png', 'img/decoraciones.png');
 let escena_bison = new Stage(0, 0, 474, 224, 'img/zangif_sprite_background.png', 'img/decoraciones.png');
+let escena_crossover = new Stage(0, 0, 474, 224, 'img/mapAlvida.png', 'img/decoraciones.png');
+
 
 function inicio() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
-
-    principal();
+    crossover();
 }
 
-let animacionActivaZangief = null; // Variable para rastrear la animación activa
-let animacionActivaBison = null; // Variable para rastrear la animación activa de Bison
+
+function crossover() {
+    borrarCanvas();
+    mostrarContador('img/decoraciones.png');
+    isCrossover = true;
+    escena_crossover.dibuja();
+    escena_crossover.animacion(mapaCrossover);
+
+    if (esPrimeraMuerte1p && derrotaPj) {
+    } else {
+        if (!Mario.muertePj) {
+            Mario.animacion(marioReady);
+        }
+    }
+
+    if (esPrimeraMuerte2p) {
+        if (derrotaPj) {
+            Mario.victoriaP1(marioVictoria, Mario.x);
+            Luffy.muerteP2(luffyMuerte, Luffy.x);
+            paraContador = true;
+        }
+    }
+
+    if (esPrimeraMuerte2p && derrotaPj) {
+        // animacionLuffy = luffyVictory;
+        paraContador = true;
+    } else {
+        if (!Luffy.muertePj) {
+            Luffy.animacion(luffyReady);
+        }
+    }
+    if (esSegundaMuerte2p) {
+        // animacionLuffy = luffyVictoryAlternate;
+        Luffy.y = 50;
+        paraContador = true;
+    }
+    if (esPrimeraMuerte1p) {
+        if (derrotaPj) {
+            Luffy.victoriaP2(luffyVictoria, Luffy.x);
+            Mario.muerteP1(marioMuerte, Mario.x);
+            paraContador = true;
+        } else {
+            Luffy.animacion(luffyReady);
+        }
+    }
+
+    Mario.dibuja();
+    Mario.dibujarObjetos();
+
+    Luffy.dibuja();
+    Luffy.dibujarObjetos();
+
+    switch (animacionActivaLuffy) {
+        case 'patada':
+            Luffy.patada(luffyPatada);
+            break;
+        case 'golpe':
+            Luffy.golpe(luffyPunyo);
+            break;
+        case 'golpeEspecial':
+            break;
+        default:
+            break;
+    }
+    switch (animacionActivaMario) {
+        case 'patada':
+            Mario.patada(marioPatada);
+            break;
+        case 'golpe':
+            Mario.golpe(marioPunyo);
+            break;
+        case 'golpeEspecial':
+            break;
+        default:
+            break;
+    }
+
+    escena_crossover.dibujarObjetos();
+    colision();
+    muerte();
+    interval = requestAnimationFrame(crossover);
+}
+
 
 
 function principal() {
     borrarCanvas();
     mostrarContador('img/decoraciones.png');
+    isCrossover = false;
     // console.log(paraContador);
     if (!cambioEscenario) {
         escena_bison.dibuja();
@@ -1105,7 +1233,6 @@ function principal() {
         animacion1p = bisonVictory;
     } else {
         if (!Bison.muertePj) {
-            console.log("Entra");
             Bison.animacion(bisonReady);
         }
     }
@@ -1115,11 +1242,10 @@ function principal() {
     if (esPrimeraMuerte1p == true || esSegundaMuerte1p == true) {
         if (derrotaPj) {
             Bison.victoriaP2(animacion1p, Bison.x);
-            Zangif.muerteP1(Zangif.x);
+            Zangif.muerteP1(zangifMuerte, Zangif.x);
             paraContador = true;
 
         }
-
     }
 
     // Bison.descender();
@@ -1136,7 +1262,6 @@ function principal() {
         paraContador = true;
     } else {
         if (!Zangif.muertePj) {
-            console.log("Entra");
             Zangif.animacion(ZangifReady);
         }
     }
@@ -1148,30 +1273,45 @@ function principal() {
     if (esPrimeraMuerte2p == true || esSegundaMuerte2p == true) {
         if (derrotaPj) {
             Zangif.victoriaP1(animacion2p, Zangif.x);
-            Bison.muerteP2(Bison.x);
+            Bison.muerteP2(bisonMuerte, Bison.x);
             paraContador = true;
+        } else {
+            Zangif.animacion(ZangifReady);
         }
 
     }
 
     // Llamar a la animación activa de Zangif
-    if (animacionActivaZangief === 'patada') {
-        Zangif.patada();
-    } else if (animacionActivaZangief === 'golpe') {
-        Zangif.golpe();
-    } else if (animacionActivaZangief === 'golpeEspecial') {
-        Zangif.golpeEspecial();
+    switch (animacionActivaZangief) {
+        case 'patada':
+            Zangif.patada(zangifPatada);
+            break;
+        case 'golpe':
+            Zangif.golpe(zangifPunyo);
+            break;
+        case 'golpeEspecial':
+            Zangif.golpeEspecial();
+            break;
+        default:
+            break;
     }
 
 
     // Llamar a la animación activa de Bison
-    if (animacionActivaBison === 'patada') {
-        Bison.patada();
-    } else if (animacionActivaBison === 'golpe') {
-        Bison.golpe();
-    } else if (animacionActivaBison === 'golpeEspecial') {
-        Bison.golpeEspecial();
+    switch (animacionActivaBison) {
+        case 'patada':
+            Bison.patada(bisonPatada);
+            break;
+        case 'golpe':
+            Bison.golpe(bisonPunyo);
+            break;
+        case 'golpeEspecial':
+            Bison.golpeEspecial();
+            break;
+        default:
+            break;
     }
+
     colision();
     escena_bison.dibujarObjetos();
 
@@ -1194,39 +1334,79 @@ function reiniciarJuego() {
     Bison.muertePj = false;
     Zangif.muertePj = false;
     derrotaPj = false;
-    paraContador = false;
-    principal();
+    // Guardar la victoria del ganador en el almacenamiento local
+    if (esPrimeraMuerte1p || esSegundaMuerte1p) {
+        localStorage.setItem('winner', 'Bison');
+    } else if (esPrimeraMuerte2p || esSegundaMuerte2p) {
+        localStorage.setItem('winner', 'Zangif');
+    }
+
+    inicio();
 }
 
 function muerte() {
+    console.log("Muerte");
     derrotaPj = true;
-    if (!Zangif.inmortale && Zangif.tamanybarra >= 145) {
-        Zangif.tamanybarra = 0;
+    if (!isCrossover) {
+        if (!Zangif.inmortale && Zangif.tamanybarra >= 145) {
+            Zangif.tamanybarra = 0;
 
-        if (esPrimeraMuerte1p) {
-            esSegundaMuerte1p = true;
+            if (esPrimeraMuerte1p) {
+                esSegundaMuerte1p = true;
+            }
+            esPrimeraMuerte1p = true;
+
+            victoria.play();
+            derrotaPj = false;
+
+            setTimeout(reiniciarJuego, 3000);
         }
-        esPrimeraMuerte1p = true;
 
-        victoria.play();
-        derrota.play();
+        if (!Bison.inmortale && Bison.tamanybarra <= 0) {
+            Bison.tamanybarra = 145;
 
-        setTimeout(reiniciarJuego, 3000);
+            if (esPrimeraMuerte2p) {
+                esSegundaMuerte2p = true;
+            }
+            esPrimeraMuerte2p = true;
+
+            victoria.play();
+            derrota.play();
+
+            setTimeout(reiniciarJuego, 3000);
+        }
+    } else {
+        if (!Luffy.inmortale && Luffy.tamanybarra <= 0) {
+            Luffy.tamanybarra = 145;
+
+            if (esPrimeraMuerte2p) {
+                esSegundaMuerte2p = true;
+            }
+            esPrimeraMuerte2p = true;
+
+            victoria.play();
+            derrota.play();
+
+            // setTimeout(reiniciarJuego, 3000);
+        }
+
+        if (!Mario.inmortale && Mario.tamanybarra >= 145) {
+            Mario.tamanybarra = 0;
+
+            if (esPrimeraMuerte1p) {
+                esSegundaMuerte1p = true;
+            }
+            esPrimeraMuerte1p = true;
+
+            victoria.play();
+            derrotaPj = false;
+
+            // setTimeout(reiniciarJuego, 3000);
+        }
     }
 
-    if (!Bison.inmortale && Bison.tamanybarra <= 0) {
-        Bison.tamanybarra = 145;
 
-        if (esPrimeraMuerte2p) {
-            esSegundaMuerte2p = true;
-        }
-        esPrimeraMuerte2p = true;
 
-        victoria.play();
-        derrota.play();
-
-        setTimeout(reiniciarJuego, 3000);
-    }
 }
 
 
@@ -1235,27 +1415,60 @@ function borrarCanvas() {
 }
 
 function colision() {
-    if (golpeBison) {
-        // console.log(bisonGolpeando);
-        if (bisonGolpeando <= (Zangif.x + Zangif.width)) {
-            Zangif.gettingHit();
-            if (golpeEspecialBison) {
-                Zangif.quitarVida(10);
-            } else {
-                Zangif.quitarVida(2);
+    if (golpeBison || luffyGolpe) {
+        console.log(Zangif.x + Zangif.width);
+        console.log(bisonGolpeando);
+        if (!isCrossover) {
+            if (animacionActivaBison == 'golpeEspecial') {
+                bisonGolpeando = (Bison.x - Bison.width) + 10;
             }
+            if (bisonGolpeando <= (Zangif.x + Zangif.width)) {
+                Zangif.gettingHit(zangiefGettingHit);
+                if (golpeEspecialBison) {
+                    Zangif.quitarVida(10);
+                } else {
+                    Zangif.quitarVida(2);
+                }
 
+
+            }
+        } else {
+            if (luffyGolpeando <= (Mario.x + Mario.width)) {
+                Mario.gettingHit(marioGettingHit);
+                if (luffyGolpe) {
+                    Mario.quitarVida(2);
+                } else {
+                    // Mario.quitarVida(2);
+                }
+            }
         }
+
+
+
+
     }
 
-    if (golpeZangif) {
+    if (golpeZangif || marioGolpe) {
+        if (!isCrossover) {
+            if (zangifGolpeando >= (Bison.x + Bison.width)) {
+                Bison.gettingHit(bisonGettingHit);
+                if (golpeEspecialBison) {
+                    Bison.quitarVida(10);
+                } else {
+                    Bison.quitarVida(2);
+                }
+            }
+        } else {
+            console.log(marioGolpeando);
+            console.log(Luffy.x + Luffy.width);
+            if (marioGolpeando >= (Luffy.x + Luffy.width)) {
+                Luffy.gettingHit(luffyGettingHit);
+                if (marioGolpe) {
+                    Luffy.quitarVida(10);
+                } else {
+                    Luffy.quitarVida(2);
+                }
 
-        if (zangifGolpeando >= (Bison.x + Bison.width)) {
-            Bison.gettingHit();
-            if (golpeEspecialBison) {
-                Bison.quitarVida(10);
-            } else {
-                Bison.quitarVida(2);
             }
         }
     }
