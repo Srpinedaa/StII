@@ -1423,7 +1423,10 @@ function colision() {
                 bisonGolpeando = (Bison.x - Bison.width) + 10;
             }
             if (bisonGolpeando <= (Zangif.x + Zangif.width)) {
-                Zangif.gettingHit(zangiefGettingHit);
+                setTimeout(() => {
+                    Zangif.gettingHit(zangiefGettingHit);
+                }
+                    , 200);
                 if (golpeEspecialBison) {
                     Zangif.quitarVida(10);
                 } else {
@@ -1451,7 +1454,9 @@ function colision() {
     if (golpeZangif || marioGolpe) {
         if (!isCrossover) {
             if (zangifGolpeando >= (Bison.x + Bison.width)) {
-                Bison.gettingHit(bisonGettingHit);
+                setTimeout(() => {
+                    Bison.gettingHit(bisonGettingHit);
+                }, 300);
                 if (golpeEspecialBison) {
                     Bison.quitarVida(10);
                 } else {
