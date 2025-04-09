@@ -21,63 +21,6 @@ function menuPrincipal() {
 
 }
 
-let mapas = function (x, y, width, height, img, imgDecoraciones) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.img = img;
-    this.imgDecoraciones = imgDecoraciones;
-    this.frameDelay = 5;
-    this.frameContador = 0;
-    this.dibuja = function () {
-        let sprite = new Image();
-        sprite.src = this.img;
-        ctx.drawImage(sprite, this.sprite_x, this.sprite_y,
-            this.sprite_w, this.sprite_h, this.x, this.y, this.width, this.height);
-    }
-
-    let actualFrame = 0;
-
-    this.animacion = function (nombreAnimacion) {
-        if (this.frameContador >= this.frameDelay) {
-            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
-            let frame = nombreAnimacion[actualFrame];
-            this.sprite_x = frame.x;
-            this.sprite_y = frame.y;
-            this.sprite_w = frame.width;
-            this.sprite_h = frame.height;
-
-            this.frameContador = 0;
-        } else {
-            this.frameContador++;
-        }
-        this.dibuja();
-        this.dibujarObjetos();
-        mostrarContador();
-        // interval_player = requestAnimationFrame(this.animacion.bind(this));
-    }
-    let spriteDecoraciones = new Image();
-    spriteDecoraciones.src = this.imgDecoraciones;
-    this.dibujarObjetos = function () {
-        if (Zangif.tamanybarra >= 145 && Bison.tamanybarra <= 0) {
-            //Ko
-            ctx.drawImage(spriteDecoraciones, 161, 1,
-                32, 14, 173, 18, 32, 14);
-        } else {
-            //Ko
-            ctx.drawImage(spriteDecoraciones, 161, 16,
-                32, 14, 173, 18, 32, 14);
-        }
-
-        if (segundo_10s <= 0 && segundo_1s <= 0) {
-            //TIME OVER
-            ctx.drawImage(spriteDecoraciones, 352, 112,
-                64, 30, 160, 80, 64, 30);
-        }
-
-    }
-}
 
 function mostrarContador() {
     contadorFrames++;
@@ -885,6 +828,7 @@ document.addEventListener('keypress', (e) => {
     }
 
 });
+
 let golpeBison = false;
 let golpeEspecialBison = false;
 let golpeZangif = false;
@@ -924,6 +868,8 @@ document.addEventListener('keyup', (e) => {
 
     }
 });
+
+
 
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
@@ -1013,6 +959,106 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
+//Escena de seleccion de personajes
+let selectStage = function (x, y, width, height, img) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.img = img;
+    this.frameDelay = 5;
+    this.frameContador = 0;
+    this.img = img;
+    let sprite = new Image();
+    sprite.src = this.img;
+
+
+    let imgDecoraciones = new Image();
+    imgDecoraciones.src = 'img/decoraciones.png'; //Cargar la imagen
+    let zangifImg = new Image();
+    zangifImg.src = 'img/zangif.png'; //Cargar la imagen
+    let bisonImg = new Image();
+    bisonImg.src = 'img/bison.png';
+
+
+    this.dibuja = function () {
+        ctx.drawImage(sprite, this.sprite_x, this.sprite_y,
+            this.sprite_w, this.sprite_h, this.x, this.y, this.width,
+            this.height);
+    }
+    this.dibujarObjetos = function () {
+        //zangief
+        ctx.drawImage(zangifImg, 298, 8348,
+            129, 113, 10, 5, 129, 113); //Dibujar el personaje
+        //Nombre zangit
+        ctx.drawImage(spriteDecoraciones, 16, 71,
+            63, 10, 40, 130, 63, 10); //Dibujar el nombre
+        //Numero de personaje 1p
+        ctx.drawImage(spriteDecoraciones, 31, 100,
+            7, 11, 22, 180, 7, 11); //Dibujar el numero de personaje
+        ctx.drawImage(spriteDecoraciones, 17, 124,
+            10, 12, 30, 180, 10, 12); //Dibujar el numero de personaje
+        //bison
+        ctx.drawImage(bisonImg, 1, 1216,
+            129, 106, 245, 15, 129, 106); //Dibujar el personaje
+        //nombre bison
+        ctx.drawImage(spriteDecoraciones, 290, 71,
+            61, 10, 285, 130, 61, 10); //Dibujar el nombre
+        //Numero de personaje  2p
+        ctx.drawImage(spriteDecoraciones, 41, 100,
+            10, 12, 345, 180, 10, 12); //Dibujar el numero de personaje
+        ctx.drawImage(spriteDecoraciones, 17, 124,
+            10, 12, 355, 180, 10, 12); //Dibujar el numero de personaje
+        //player select
+        ctx.drawImage(spriteDecoraciones, 353, 88,
+            126, 14, 135, 145, 126, 14);
+        //imagen tapar jugadores
+        ctx.drawImage(sprite, 227, 701,
+            96, 112, 65, 162, 256, 31);
+        ctx.drawImage(sprite, 227, 701,
+            96, 112, 65, 193, 65, 31);
+        ctx.drawImage(sprite, 227, 701,
+            96, 112, 160, 193, 130, 32);
+    }
+    
+    this.dibujarObjetos2= function () {
+        //menu
+        ctx.drawImage(spriteDecoraciones, 212, 154,
+            99, 10, 90, 130, 99, 10); //Dibujar el nombre
+    }
+    let actualFrame = 0;
+    this.animacion = function (nombreAnimacion) {
+        if (this.frameContador >= this.frameDelay) {
+            actualFrame = (actualFrame + 1) % nombreAnimacion.length;
+            let frame = nombreAnimacion[actualFrame];
+            this.sprite_x = frame.x;
+            this.sprite_y = frame.y;
+            this.sprite_w = frame.width;
+            this.sprite_h = frame.height;
+
+            this.frameContador = 0;
+        } else {
+            this.frameContador++;
+        }
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, canvas.width,
+            canvas.height
+        );
+        this.dibuja();
+        // interval_player = requestAnimationFrame(this.animacion.bind(this));
+    }
+
+}
+
+
+
+//imagen de inicio
+function startImagen() {
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(15, 20, 290, 128);
+}
+
+
 let Stage = function (x, y, width, height, img, imgDecoraciones) {
     this.x = x;
     this.y = y;
@@ -1075,13 +1121,38 @@ let Stage = function (x, y, width, height, img, imgDecoraciones) {
 
 let escena_ken = new Stage(0, 0, 621, 224, 'img/Ken_Background_sprite.png', 'img/decoraciones.png');
 let escena_bison = new Stage(0, 0, 474, 224, 'img/zangif_sprite_background.png', 'img/decoraciones.png');
-
+let escenaInicial = new selectStage(120, 50, 150, 80, 'img/StreetFighterTheWorldWarrior.png');
+let escenaVs = new selectStage(0, 0, 385, 225, 'img/characterSelect.png', 'img/decoraciones.png'); 
+//Estoy dentro pd: enmanuel no jo
 function inicio() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
-    principal();
+    // escenarioActual2();
+    // principal();
+    escenarioStII();
 }
+
+function escenarioActual2() {
+    borrarCanvas();
+    console.log("Hola");
+    escenaVs.dibuja();
+    escenaVs.animacion(stage);
+    escenaVs.dibujarObjetos();
+    interval = requestAnimationFrame(escenarioActual2);
+}
+
+function escenarioStII() {
+    borrarCanvas();
+    console.log("Hola");
+    escenaInicial.dibuja();
+    escenaInicial.animacion(escenarioInicial);
+    // console.log("crossover");
+    escenaInicial.dibujarObjetos2();
+    interval = requestAnimationFrame(escenarioStII);
+}
+
+
 
 let animacionActivaZangief = null; // Variable para rastrear la animación activa
 let animacionActivaBison = null; // Variable para rastrear la animación activa de Bison
@@ -1090,9 +1161,10 @@ let animacionActivaBison = null; // Variable para rastrear la animación activa 
 function principal() {
     borrarCanvas();
     mostrarContador('img/decoraciones.png');
+
     // console.log(paraContador);
     if (!cambioEscenario) {
-        escena_bison.dibuja();
+        escena_bison.dibuja()
         escena_bison.animacion(bisonEscena);
     } else {
         escena_ken.dibuja();
@@ -1105,7 +1177,6 @@ function principal() {
         animacion1p = bisonVictory;
     } else {
         if (!Bison.muertePj) {
-            console.log("Entra");
             Bison.animacion(bisonReady);
         }
     }
@@ -1136,7 +1207,6 @@ function principal() {
         paraContador = true;
     } else {
         if (!Zangif.muertePj) {
-            console.log("Entra");
             Zangif.animacion(ZangifReady);
         }
     }
@@ -1172,6 +1242,10 @@ function principal() {
     } else if (animacionActivaBison === 'golpeEspecial') {
         Bison.golpeEspecial();
     }
+
+
+
+
     colision();
     escena_bison.dibujarObjetos();
 
@@ -1204,6 +1278,7 @@ function muerte() {
         Zangif.tamanybarra = 0;
 
         if (esPrimeraMuerte1p) {
+            reiniciarJuego();
             esSegundaMuerte1p = true;
         }
         esPrimeraMuerte1p = true;
@@ -1218,6 +1293,7 @@ function muerte() {
         Bison.tamanybarra = 145;
 
         if (esPrimeraMuerte2p) {
+            reiniciarJuego();
             esSegundaMuerte2p = true;
         }
         esPrimeraMuerte2p = true;
