@@ -14,6 +14,8 @@ let paraContador = false;
 let spriteDecoraciones = new Image();
 let derrotaPj = false;
 let isCrossover = false;
+let timeOver = false;
+
 spriteDecoraciones.src = 'img/decoraciones.png';
 document.addEventListener('DOMContentLoaded', inicio);
 
@@ -75,6 +77,7 @@ let mapas = function (x, y, width, height, img, imgDecoraciones) {
             //TIME OVER
             ctx.drawImage(spriteDecoraciones, 352, 112,
                 64, 30, 160, 80, 64, 30);
+            timeOver = true;
         }
 
     }
@@ -422,17 +425,33 @@ let Player1 = function (x, y, width, height, img, imgDecoraciones) {
             10, 12, 10, 0, 10, 12);
 
         if (esPrimeraMuerte2p) {
-            //Victoria 2
-            ctx.drawImage(spriteDecoraciones, 344, 15,
-                16, 17, 18, 16, 16, 17);
+            if (!isCrossover) {
+                //Victoria 2
+                ctx.drawImage(spriteDecoraciones, 344, 15,
+                    16, 17, 18, 16, 16, 17);
+            } else {
+                let imgCrossover = new Image();
+                imgCrossover.src = 'img/mario.png';
+                ctx.drawImage(imgCrossover, 412, 1466,
+                    15, 15, 18, 16, 15, 15);
+            }
+
             // this.animacion(zangiefVictory);
             victoriaPersonaje = true;
 
         }
         if (esSegundaMuerte2p) {
             //Victoria 1
-            ctx.drawImage(spriteDecoraciones, 344, 15,
-                16, 17, 1, 16, 16, 17);
+            if (!isCrossover) {
+                ctx.drawImage(spriteDecoraciones, 344, 15,
+                    16, 17, 1, 16, 16, 17);
+            } else {
+                let imgCrossover = new Image();
+                imgCrossover.src = 'img/mario.png';
+                ctx.drawImage(imgCrossover, 412, 1466,
+                    15, 15, 1, 16, 15, 15);
+            }
+
             victoriaPersonaje = true;
 
             // this.animacion(zangiefVictoryAlternate);
@@ -748,15 +767,31 @@ let player2 = function (x, y, width, height, img, imgDecoraciones) {
             10, 12, 373, 0, 10, 12);
         if (esPrimeraMuerte1p) {
             //Victoria 1
-            ctx.drawImage(spriteDecoraciones, 344, 15,
-                16, 17, 350, 16, 16, 17);
+            if (!isCrossover) {
+                ctx.drawImage(spriteDecoraciones, 344, 15,
+                    16, 17, 350, 16, 16, 17);
+            } else {
+                let imgCrossover = new Image();
+                imgCrossover.src = 'img/mario.png';
+                ctx.drawImage(imgCrossover, 412, 1466,
+                    15, 15, 350, 16, 15, 15);
+            }
             victoriaPersonaje = true;
+
             // this.animacion(bisonVictory);
         }
         if (esSegundaMuerte1p) {
             // //Victoria 2
-            ctx.drawImage(spriteDecoraciones, 344, 15,
-                16, 17, 367, 16, 16, 17);
+            if (!isCrossover) {
+                ctx.drawImage(spriteDecoraciones, 344, 15,
+                    16, 17, 367, 16, 16, 17);
+            } else {
+                let imgCrossover = new Image();
+                imgCrossover.src = 'img/mario.png';
+                ctx.drawImage(imgCrossover, 412, 1466,
+                    15, 15, 367, 16, 15, 15);
+            }
+
             victoriaPersonaje = true;
 
             // this.animacion(bisonVictoryAlternate);
@@ -830,6 +865,7 @@ let Luffy = new player2(250, 125, 34, 43, 'img/luffy.png', 'img/decoraciones.png
 let cambioEscenario = false;
 let Bison = new player2(230, 100, 108, 96, 'img/Bison.png', 'img/decoraciones.png');
 document.addEventListener('keydown', (e) => {
+    if (timeOver) return;
     switch (e.key) {
         //Jugador Bison
         case "ArrowLeft":
@@ -1126,7 +1162,7 @@ let escena_crossover = new Stage(0, 0, 474, 224, 'img/mapAlvida.png', 'img/decor
 function inicio() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
-    crossover();
+    principal();
 }
 
 
@@ -1136,44 +1172,46 @@ function crossover() {
     isCrossover = true;
     escena_crossover.dibuja();
     escena_crossover.animacion(mapaCrossover);
-
-    if (esPrimeraMuerte1p && derrotaPj) {
-    } else {
-        if (!Mario.muertePj) {
-            Mario.animacion(marioReady);
+    if (!timeOver) {
+        if (esPrimeraMuerte1p && derrotaPj) {
+        } else {
+            if (!Mario.muertePj) {
+                Mario.animacion(marioReady);
+            }
         }
-    }
 
-    if (esPrimeraMuerte2p) {
-        if (derrotaPj) {
-            Mario.victoriaP1(marioVictoria, Mario.x);
-            Luffy.muerteP2(luffyMuerte, Luffy.x);
-            paraContador = true;
+        if (esPrimeraMuerte2p) {
+            if (derrotaPj) {
+                Mario.victoriaP1(marioVictoria, Mario.x);
+                Luffy.muerteP2(luffyMuerte, Luffy.x);
+                paraContador = true;
+            }
         }
-    }
 
-    if (esPrimeraMuerte2p && derrotaPj) {
-        // animacionLuffy = luffyVictory;
-        paraContador = true;
-    } else {
-        if (!Luffy.muertePj) {
-            Luffy.animacion(luffyReady);
-        }
-    }
-    if (esSegundaMuerte2p) {
-        // animacionLuffy = luffyVictoryAlternate;
-        Luffy.y = 50;
-        paraContador = true;
-    }
-    if (esPrimeraMuerte1p) {
-        if (derrotaPj) {
-            Luffy.victoriaP2(luffyVictoria, Luffy.x);
-            Mario.muerteP1(marioMuerte, Mario.x);
+        if (esPrimeraMuerte2p && derrotaPj) {
+            // animacionLuffy = luffyVictory;
             paraContador = true;
         } else {
-            Luffy.animacion(luffyReady);
+            if (!Luffy.muertePj) {
+                Luffy.animacion(luffyReady);
+            }
+        }
+        if (esSegundaMuerte2p) {
+            // animacionLuffy = luffyVictoryAlternate;
+            Luffy.y = 50;
+            paraContador = true;
+        }
+        if (esPrimeraMuerte1p) {
+            if (derrotaPj) {
+                Luffy.victoriaP2(luffyVictoria, Luffy.x);
+                Mario.muerteP1(marioMuerte, Mario.x);
+                paraContador = true;
+            } else {
+                Luffy.animacion(luffyReady);
+            }
         }
     }
+
 
     Mario.dibuja();
     Mario.dibujarObjetos();
